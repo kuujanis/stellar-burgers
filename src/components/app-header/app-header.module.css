@@ -1,0 +1,35 @@
+.head {
+    composes: pt-4 pb-4 pr-5 pl-5 from global; 
+    width: 100%;
+    min-height: 50px;
+    position: relative;
+    display: flex;
+    align-items: center; 
+    background-color: #1c1c21;
+  }
+
+  .link {
+    composes: pr-5 pl-5 pt-4 pb-4 from global;
+    text-decoration: none;
+    border-radius: 40px;
+    color: #8585ad;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .right {
+    margin-left: auto
+  }
+  
+  .white {
+    color: #F2F2F3
+  }
+  

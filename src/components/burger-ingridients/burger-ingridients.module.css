@@ -1,0 +1,31 @@
+.scrolldiv {
+    height: 100%;
+    overflow: auto;
+}
+.scrolldiv::-webkit-scrollbar {
+    background-color: #2F2F37;
+    width: 10px;
+    height: 8px;
+}
+.scrolldiv::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+
+.collumn {
+    width: 600px;
+    height: 380px;
+    position: relative
+}
+
+.list {
+    composes: pl-4 pr-4 from global;
+    margin-left: 0;
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 32px 24px;
+}
+
+.tablink {
+    text-decoration: none;
+}
