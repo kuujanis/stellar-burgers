@@ -1,11 +1,15 @@
-import React from "react";
+import React, {useState} from "react";
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './ingridient.module.css';
 import PropTypes from "prop-types";
+import Modal from "../../modal/modal";
+import IngredientDetails from "../../ingredient-details/ingredient-details";
 
 function Ingridient(props) {
+    const [modalIsActive, setModalActive] = useState(false);
     return (
-        <div className={styles.item}>
+        <div>
+            <div className={styles.item} onClick={()=>setModalActive(true)}>
             <Counter />
             <img src={props.image} alt={props.name}/>
             <p  className={styles.price}>
@@ -15,7 +19,13 @@ function Ingridient(props) {
             <p className={styles.name}>
                 <span className="text text_type_main-default">{props.name}</span>
             </p>      
+            </div>
+            {modalIsActive && <Modal header="Детали ингредиента" setModalActive={setModalActive}>
+	            <IngredientDetails {...props}/>
+            </Modal>
+            }
         </div>
+        
     )
     
 }
