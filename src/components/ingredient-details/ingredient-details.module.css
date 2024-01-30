@@ -14,3 +14,7 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+.ingredient_pic {
+    width: 480px;
+}

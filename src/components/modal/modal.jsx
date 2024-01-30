@@ -39,9 +39,9 @@ const Modal = (props) => {
     );
 }
 
-ModalOverlay.propTypes = {
-	setModalActive: PropTypes.func,
-	children: PropTypes.node
+Modal.propTypes = {
+	setModalActive: PropTypes.func.isRequired,
+	children: PropTypes.node.isRequired
 };
 
 

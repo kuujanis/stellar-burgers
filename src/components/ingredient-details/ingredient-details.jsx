@@ -6,7 +6,7 @@ import ingridientPropType from '../../utils/type';
 const IngredientDetails = (props) => {
 	return(
 		<div className={styles.ingredient_modal}> 
-			<img src={props.image} alt={props.name} style={{width:'480px'}}/>
+			<img src={props.image} alt={props.name} className={styles.ingredient_pic}/>
 			<span className="text text_type_main-medium">{props.name}</span>
 			<div className={styles.ingredient_energy}>
 				<span className="text text_type_main-small text_color_inactive">
@@ -26,6 +26,6 @@ const IngredientDetails = (props) => {
 	);
 }
 
-IngredientDetails.propTypes = {data: ingridientPropType}
+IngredientDetails.propTypes = {data: ingridientPropType.isRequired}
 
 export default IngredientDetails

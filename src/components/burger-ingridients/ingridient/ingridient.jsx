@@ -31,9 +31,9 @@ function Ingridient(props) {
 }
 
 Ingridient.propTypes = {
-	name : PropTypes.string,
-	image: PropTypes.string,
-	price: PropTypes.number
+	name : PropTypes.string.isRequired,
+	image: PropTypes.string.isRequired,
+	price: PropTypes.number.isRequired
 };
 
 export default Ingridient

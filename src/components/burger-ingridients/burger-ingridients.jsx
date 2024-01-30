@@ -13,7 +13,7 @@ function BurgerIngridients(props) {
 
     const renderIngridient = (props) => {
         return (
-            <li key={props.id}>
+            <li key={props._id}>
                 <Ingridient {...props}/>
             </li>
         )};
@@ -25,7 +25,7 @@ function BurgerIngridients(props) {
     return(
         <section className={styles.collumn}>
             <h1 className="text text_type_main-large pt-10 pb-5">Соберите бургер</h1>
-            <div className="mb-10" style={{ display: "flex" }}>
+            <div className={styles.tablink}>
                 <a href='#bun' className={styles.tablink}>
                     <Tab value='bun' active={current==='bun'} onClick={showTab}>Булки</Tab>
                 </a>
@@ -57,7 +57,7 @@ function BurgerIngridients(props) {
 }
 
 
-BurgerIngridients.propTypes = {data: PropTypes.arrayOf(ingridientPropType)}
+BurgerIngridients.propTypes = {data: PropTypes.arrayOf(ingridientPropType).isRequired}
 
 
 export default BurgerIngridients

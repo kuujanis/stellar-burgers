@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import styles from './App.module.css'
+import styles from './app.module.css'
 
 import AppHeader from '../app-header/app-header';
 import BurgerIngridients from '../burger-ingridients/burger-ingridients'; 
@@ -16,7 +16,7 @@ function App() {
   useEffect(() => {fetchData(normaUrl,setData)},[normaUrl,setData])
 
   return (
-    <div className={styles.root}>
+    <main className={styles.main}>
       <AppHeader />
         <div className={styles.frame}>
           <dataContext.Provider value={data}>
@@ -25,7 +25,7 @@ function App() {
           </dataContext.Provider>
         </div>
       
-    </div>
+    </main>
     
   );
 }

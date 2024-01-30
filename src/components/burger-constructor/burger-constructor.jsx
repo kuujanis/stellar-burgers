@@ -18,7 +18,7 @@ function BurgerConstructor() {
 
      const renderElement = (props) => {
         return ((props.type === 'main' || props.type === 'sauce') ?
-            <li key={props.id} className={styles.card}>
+            <li key={props._id} className={styles.card}>
                 <DragIcon type="primary"/>
                 <ConstructorElement 
                 text={props.name} 
@@ -56,7 +56,7 @@ function BurgerConstructor() {
                     <span className="text text_type_digits-medium">610</span>
                 </p>
                     <CurrencyIcon type="primary"/>
-                    <Button type="primary" size="large" onClick={()=>setModalActive(true)}>Оформить заказ</Button>
+                    <Button type="primary" htmlType='submit' size="large" onClick={()=>setModalActive(true)}>Оформить заказ</Button>
                     {modalIsActive && <Modal setModalActive={setModalActive}>
 	                <OrderDetails/>
                 </Modal>}
@@ -64,7 +64,5 @@ function BurgerConstructor() {
         </section>
     )
 }
-
-BurgerConstructor.propTypes = {data: PropTypes.arrayOf(ingridientPropType)}
 
 export default BurgerConstructor
