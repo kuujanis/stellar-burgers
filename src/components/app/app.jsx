@@ -16,16 +16,16 @@ function App() {
   useEffect(() => {fetchData(normaUrl,setData)},[normaUrl,setData])
 
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <AppHeader />
-        <div className={styles.frame}>
+        <main className={styles.frame}>
           <dataContext.Provider value={data}>
             <BurgerIngridients data={data} />
             <BurgerConstructor data={data} />
           </dataContext.Provider>
-        </div>
+        </main>
       
-    </main>
+    </div>
     
   );
 }
