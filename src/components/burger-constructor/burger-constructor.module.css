@@ -1,0 +1,45 @@
+.column{
+    composes: pt-25 from global;
+    position: relative;
+    width: 600px;
+    height: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.card {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-right: 8px;
+    gap: 24px;
+}
+
+.scrolldiv {
+    height: 100%;
+    overflow: auto;
+}
+.scrolldiv::-webkit-scrollbar {
+    background-color: #2F2F37;
+    width: 10px;
+    height: 8px;
+}
+.scrolldiv::-webkit-scrollbar-thumb {
+    background: #8585AD;
+}
+.orderlist {
+    max-height: 60%;
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 16px;
+}
+.sum {
+    padding-top: 40px;
+    display:flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: center;
+    justify-content: flex-end;
+}
