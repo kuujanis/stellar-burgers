@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './app.module.css'
 
 import AppHeader from '../app-header/app-header';
@@ -8,11 +8,23 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { normaUrl } from '../../utils/fetch';
 import fetchData from '../../utils/fetch';
 
+import {fetchIngredients} from '../../services/actions/fetchData'
 import { dataContext } from '../../context';
 
 
+import { useDispatch } from 'react-redux';
+
+
+
 function App() {
-  const [data,setData] = React.useState([]);
+  const [data,setData] = useState([]);
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchIngredients())
+  }, [dispatch])
+
   useEffect(() => {fetchData(normaUrl,setData)},[normaUrl,setData])
 
   return (
@@ -20,8 +32,10 @@ function App() {
       <AppHeader />
         <main className={styles.frame}>
           <dataContext.Provider value={data}>
-            <BurgerIngridients data={data} />
-            <BurgerConstructor data={data} />
+
+              <BurgerIngridients/>
+              <BurgerConstructor data={data} />
+
           </dataContext.Provider>
         </main>
       

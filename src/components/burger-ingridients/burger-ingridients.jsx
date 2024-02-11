@@ -1,15 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import {useSelector} from 'react-redux'
+
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingridients.module.css'
+
 import Ingridient from "./ingridient/ingridient";
 import ingridientPropType from "../../utils/type";
+
 import PropTypes from "prop-types";
 
-function BurgerIngridients(props) {
-    const [current,setCurrent] = React.useState('bun');
+function BurgerIngridients() {
+    const [current,setCurrent] = useState('bun');
     function showTab(tab) {
         setCurrent(tab);
     }
+
+    const data = useSelector(store => store.data);
 
     const renderIngridient = (props) => {
         return (
@@ -18,9 +24,9 @@ function BurgerIngridients(props) {
             </li>
         )};
 
-    const dataBun = props.data.filter((itm)=>itm.type==='bun' && itm);
-	const dataMain= props.data.filter((itm)=>itm.type==='main'&& itm);
-	const dataSauce=props.data.filter((itm)=>itm.type==='sauce' && itm);
+    const dataBun = data.filter((itm)=>itm.type==='bun' && itm);
+	const dataMain= data.filter((itm)=>itm.type==='main'&& itm);
+	const dataSauce=data.filter((itm)=>itm.type==='sauce' && itm);
 
     return(
         <section className={styles.collumn}>

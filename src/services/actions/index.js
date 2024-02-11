@@ -1,0 +1,1 @@
+export const INGREDIENTS_DATA = 'INGREDIENTS_DATA'
