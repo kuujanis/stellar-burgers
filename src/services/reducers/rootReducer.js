@@ -1,7 +1,12 @@
 import { INGREDIENTS_DATA } from "../actions";
 
 const initialState = {
-    data: []
+    data: [],
+    burgerIngredients: {
+		bun: null,
+		ingredients: [],
+		count: {}
+	}
 }
 
 export const rootReducer = (state = initialState, action) => {

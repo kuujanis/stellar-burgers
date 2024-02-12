@@ -1,5 +1,5 @@
-const normaUrl = 'https://norma.nomoreparties.space/api/ingredients '
-
+export const normaUrl = 'https://norma.nomoreparties.space/api/ingredients '
+export const postURL = 'https://norma.nomoreparties.space/api/ingredients'
 
 function fetchData(url, setData) {
     fetch(url)
@@ -20,4 +20,3 @@ function fetchData(url, setData) {
   }
 
   export default fetchData
-  export {normaUrl}

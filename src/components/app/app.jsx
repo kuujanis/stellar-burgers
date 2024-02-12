@@ -8,7 +8,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { normaUrl } from '../../utils/fetch';
 import fetchData from '../../utils/fetch';
 
-import {fetchIngredients} from '../../services/actions/fetchData'
+import {fetchIngredients} from '../../services/actions/ingredientsData'
 import { dataContext } from '../../context';
 
 
@@ -25,7 +25,7 @@ function App() {
     dispatch(fetchIngredients())
   }, [dispatch])
 
-  useEffect(() => {fetchData(normaUrl,setData)},[normaUrl,setData])
+  useEffect(() => {fetchData(normaUrl,setData)},[setData])
 
   return (
     <div className={styles.main}>

@@ -1,6 +1,5 @@
 import { INGREDIENTS_DATA } from ".";
-
-const normaUrl = 'https://norma.nomoreparties.space/api/ingredients '
+import {normaUrl} from '../../utils/fetch'
 
 export const fetchIngredients = () => {
     return function(dispatch) {
@@ -9,7 +8,7 @@ export const fetchIngredients = () => {
                 if (response.ok) {
                     return response.json();
                 } else {
-                    return Promise.reject(response.status)
+                    throw new Error("Can't fetch data");
                 }
             })
             .then(res => {
