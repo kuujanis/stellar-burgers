@@ -1,12 +1,15 @@
 import styles from './order-details.module.css';
 import okPic from '../../images/icon-accepted.svg';
-
+import { useSelector } from 'react-redux'
 
 function OrderDetails() {
+
+  const orderNumber = useSelector((state) => state.ingrd.orderNumber);
+
   return (
     <div className={styles.root}>
       <p className="text text_type_digits-large">
-        <span className={styles.glow}>034536</span>
+        <span className={styles.glow}>{orderNumber}</span>
       </p>
       <p className="text text_type_main-medium mt-8 mb-15">
         идентификатор заказа

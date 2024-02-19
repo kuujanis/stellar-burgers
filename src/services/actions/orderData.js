@@ -1,13 +1,15 @@
-import { ORDER_DATA, RESET_CONSTRUCTOR } from ".";
-import {postURL} from '../../utils/fetch'
-
+import { POST_ORDER_ERROR, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from ".";
+import {postURL} from '../../utils'
 
 export const formOrder = (orderList) => {
     return function (dispatch) {
+        dispatch({
+            type: POST_ORDER_REQUEST,
+        })
         fetch(postURL, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json;charset=utf-8'},
-            body: JSON.stringify({'ingridients':orderList})
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({"ingredients": orderList})
         })
         .then(response => {
             if (response.ok) {
@@ -19,17 +21,18 @@ export const formOrder = (orderList) => {
         .then(res => {
             if (res.success) {
                 dispatch({
-                    type: ORDER_DATA,
-                    number: res.order.number
+                    type: POST_ORDER_SUCCESS,
+                    orderNumber: res.order.number
                 })
-                dispatch({
-                    RESET_CONSTRUCTOR
-                })
+                console.log('success')
             }
         })
         .catch(err => {
             console.log(err.message)
             alert('API CONNECTION ERROR')
+            dispatch({
+                type: POST_ORDER_ERROR,
+            })
         })
     }
     

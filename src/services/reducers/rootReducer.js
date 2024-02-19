@@ -1,21 +1,9 @@
-import { INGREDIENTS_DATA } from "../actions";
+ import { combineReducers } from "redux";
+ import { modalReducer } from "./modalReducer"
+ import { ingredientReducer } from "./ingredientReducer";
 
-const initialState = {
-    data: [],
-    burgerIngredients: {
-		bun: null,
-		ingredients: [],
-		count: {}
-	}
-}
+export const rootReducer = combineReducers({
+    ingrd: ingredientReducer,
+    modal: modalReducer,
 
-export const rootReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case INGREDIENTS_DATA:
-            return {
-                ...state,
-                data: action.data
-            }
-        default: return state
-    }
-}
+})

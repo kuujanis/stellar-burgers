@@ -5,42 +5,21 @@ import AppHeader from '../app-header/app-header';
 import BurgerIngridients from '../burger-ingridients/burger-ingridients'; 
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-import { normaUrl } from '../../utils/fetch';
-import fetchData from '../../utils/fetch';
-
-import {fetchIngredients} from '../../services/actions/ingredientsData'
-import { dataContext } from '../../context';
-
-
-import { useDispatch } from 'react-redux';
-
-
+import { HTML5Backend } from "react-dnd-html5-backend";
+import { DndProvider } from "react-dnd";
 
 function App() {
-  const [data,setData] = useState([]);
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchIngredients())
-  }, [dispatch])
-
-  useEffect(() => {fetchData(normaUrl,setData)},[setData])
 
   return (
     <div className={styles.main}>
       <AppHeader />
         <main className={styles.frame}>
-          <dataContext.Provider value={data}>
-
-              <BurgerIngridients/>
-              <BurgerConstructor data={data} />
-
-          </dataContext.Provider>
+          <DndProvider backend={HTML5Backend}>
+            <BurgerIngridients/>
+            <BurgerConstructor />
+          </DndProvider>
         </main>
-      
     </div>
-    
   );
 }
 
