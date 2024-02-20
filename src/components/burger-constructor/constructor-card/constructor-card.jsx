@@ -6,6 +6,7 @@ import { useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import PropTypes from "prop-types";
+import ingredientPropType from "../../../utils/type";
 
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
@@ -108,7 +109,10 @@ function ConstructorCard({ item, index }) {
 }
 
 ConstructorCard.propTypes = {
-  item: PropTypes.object.isRequired,
+  item: PropTypes.shape({
+    ...ingredientPropType,
+    dragId: PropTypes.string.isRequired
+  }).isRequired,
   index: PropTypes.number.isRequired,
 };
 
