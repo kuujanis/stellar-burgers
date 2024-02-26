@@ -1,31 +1,38 @@
-import { useEffect, useContext } from 'react';
+import { useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import PropTypes from 'prop-types';
-import { dataContext } from '../../context';
+import { useDispatch } from "react-redux";
+import { CLOSE_MODAL } from '../../services/actions';
 
 
 const Modal = (props) => {
+	const dispatch = useDispatch();
+
+    const closeModal = () => {
+      dispatch({type: CLOSE_MODAL}, [dispatch])
+    }
+
 	useEffect(() => {
-		const onEscDown = (evt) => (evt.key === "Escape") && props.setModalActive(false);
+		const onEscDown = (evt) => (evt.key === "Escape") && closeModal();
 		document.addEventListener('keydown', onEscDown);
 		return () => {
 			document.removeEventListener('keydown', onEscDown);
 		}
-	}, [props]);
+	});
 	
 
     return ReactDOM.createPortal(
 		
 	    <div className={styles.modal_overlay}>
-			<ModalOverlay setModalActive={props.setModalActive}/>
+			<ModalOverlay setModalActive={closeModal}/>
 	        <div className={styles.modal} onClick={e=>e.stopPropagation()}>       
 		        <div className={styles.modal_title}>
 					<span className="text text_type_main-medium">{props.header}</span>
 			       
-            			<CloseIcon type="primary" onClick={()=>props.setModalActive(false)}/>
+            			<CloseIcon type="primary" onClick={closeModal}/>
           			
 		        </div>
 				<div className='mt-10'>
@@ -40,7 +47,6 @@ const Modal = (props) => {
 }
 
 Modal.propTypes = {
-	setModalActive: PropTypes.func.isRequired,
 	children: PropTypes.node.isRequired
 };
 

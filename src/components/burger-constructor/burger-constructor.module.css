@@ -1,12 +1,17 @@
-.column{
+.main{
     composes: pt-25 from global;
+}
+
+.column{
+    
     position: relative;
     width: 600px;
-    height: 480px;
+    height: 380px;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
 }
+
 
 .card {
     display: flex;
