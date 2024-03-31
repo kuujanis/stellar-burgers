@@ -82,8 +82,8 @@ export const ingredientReducer = (state = initialState, action) => {
               return {
                 ...state,
                 constructorIngredients: {
-                  bun: action.ingredients.find((item) => item.type === "bun"),
-                  slop: action.ingredients.filter(
+                  bun: action.ingredients.bun,
+                  slop: action.ingredients.slop.filter(
                     (item) => item.type !== "bun"
                   ),
                 },

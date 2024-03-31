@@ -30,7 +30,7 @@ function BurgerConstructor() {
     }
 
     const {bun, slop} = useSelector(state => state.ingrd.constructorIngredients)
-
+    const constructorIngredients = useSelector(state => state.ingrd.constructorIngredients)
     const ingredients = useSelector((state) => state.ingrd.ingredients);
     const totalPrice = useSelector((state) => state.ingrd.totalPrice);
 
@@ -38,7 +38,7 @@ function BurgerConstructor() {
     useEffect(() => {
       dispatch({
         type: GET_CONSTRUCTOR_INGREDIENTS,
-        ingredients: [],
+        ingredients: constructorIngredients,
       });
     }, [dispatch, ingredients]);
   
