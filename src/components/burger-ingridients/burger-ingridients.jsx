@@ -16,8 +16,6 @@ function BurgerIngridients() {
 
     const [current,setCurrent] = useState('bun');
 
-    var location = useLocation();
-
     const showTab = (tab) => {
         setCurrent(tab);
 		const element = document.getElementById(tab);
@@ -45,16 +43,15 @@ function BurgerIngridients() {
 
     const ingredients = useSelector(state => state.ingrd.ingredients);
 
-    const renderIngridient = (props) => {
+    const renderIngridient = (ingredient) => {
         return (
-            <Link className={styles.nonlink} key={props._id} to={`/ingredients/${props._id}`} state={{background: location }} >
-                <Ingridient {...props}/>
-            </Link>
+            <Ingridient ingredient={ingredient} key={ingredient._id}/>
         )};
 
     const ingredientsBun = ingredients.filter((itm)=>itm.type==='bun' && itm);
 	const ingredientsSlop = ingredients.filter((itm)=>itm.type==='main'&& itm);
 	const ingredientsSauce=ingredients.filter((itm)=>itm.type==='sauce' && itm);
+    
 
     return(
         <section className={styles.collumn}>

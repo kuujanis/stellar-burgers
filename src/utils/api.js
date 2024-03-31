@@ -1,10 +1,18 @@
+const authUrl = 'https://norma.nomoreparties.space/api/auth'
 
-const registerUrl = 'https://norma.nomoreparties.space/api/auth/register'
-const loginUrl = 'https://norma.nomoreparties.space/api/auth/login'
-const tokenUrl = 'https://norma.nomoreparties.space/api/auth/token'
-const logoutUrl = 'https://norma.nomoreparties.space/api/auth/logout'
-const userUrl = 'https://norma.nomoreparties.space/api/auth/user'
+const registerUrl = authUrl+'/register'
+const loginUrl = authUrl+'/login'
+const tokenUrl = authUrl+'/token'
+const logoutUrl = authUrl+'/logout'
+const userUrl = authUrl+'/user'
 
+const checkResponse = response => {
+    if (response.ok) {
+        return response.json();
+    } else {
+        return Promise.reject(response.status);
+    }
+}
 
 export const registerRequest = ({email, password, name}) => {
     return fetch(registerUrl, {
@@ -15,13 +23,7 @@ export const registerRequest = ({email, password, name}) => {
             body: JSON.stringify({email, password, name})
         }
     )
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return Promise.reject(response.status);
-        }
-    });
+    .then(res => checkResponse(res));
 };
 
 export const loginRequest = ({ email, password }) => {
@@ -32,13 +34,7 @@ export const loginRequest = ({ email, password }) => {
         },
         body: JSON.stringify({ email: email, password }),
     })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return Promise.reject(response.status);
-        }
-    });
+    .then(res => checkResponse(res));
 };
 
 export const refreshTokenRequest = () => {
@@ -51,13 +47,7 @@ export const refreshTokenRequest = () => {
             token : localStorage.getItem('refreshToken')
         }),
     })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return Promise.reject(response.status);
-        }
-    });
+    .then(res => checkResponse(res));
 };
 
 export const logoutRequest = () => {
@@ -70,13 +60,7 @@ export const logoutRequest = () => {
             token: localStorage.getItem('refreshToken')
         }),
     })
-    .then(response => {
-        if (response.ok) {
-            return response.json();
-        } else {
-            return Promise.reject(response.status);
-        }
-    });
+    .then(res => checkResponse(res));
 };
 
 
@@ -88,13 +72,7 @@ export const getUserRequest = (token) => {
             Authorization: 'Bearer ' + token
         }
     })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return Promise.reject(response.status);
-            }
-        });
+    .then(res => checkResponse(res));
 };
 export const updateUserRequest = (email, name, token) => {
     return fetch(userUrl, {
@@ -105,11 +83,5 @@ export const updateUserRequest = (email, name, token) => {
         },
         body: JSON.stringify({email, name})
     })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                return Promise.reject(response.status);
-            }
-        });
+    .then(res => checkResponse(res));
 };

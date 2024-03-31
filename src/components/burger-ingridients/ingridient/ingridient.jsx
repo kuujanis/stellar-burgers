@@ -9,10 +9,12 @@ import PropTypes from "prop-types";
 import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 import { OPEN_INGRD_MODAL, SELECT_INGREDIENT } from "../../../services/actions";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import ingredientPropType from "../../../utils/type";
 
-function Ingridient(props) {
+function Ingridient({ingredient}) {
     const dispatch = useDispatch();
+    const location = useLocation();
     const navigate = useNavigate()
     const modalIsActive = useSelector((state) => state.modal.ingrdModalActive)
     
@@ -24,11 +26,11 @@ function Ingridient(props) {
         dispatch({type: OPEN_INGRD_MODAL})
         dispatch({
             type: SELECT_INGREDIENT, 
-            currentIngredient: props })
+            currentIngredient: ingredient })
         console.log(currentIngredient)
     };
 
-    const id = props._id;
+    const id = ingredient._id;
   
     const [{ opacity }, dragRef] = useDrag({
       type: "ingredients",
@@ -39,20 +41,20 @@ function Ingridient(props) {
     });
     
     return (
-        <div>
+        <Link className={styles.nonlink} key={ingredient._id} to={`/ingredients/${ingredient._id}`} state={{background: location, ingredient }} >
             <div className={styles.item} onClick={onIngredientClick} ref={dragRef} style={{opacity}}>
-            <img src={props.image} alt={props.name}/>
+            <img src={ingredient.image} alt={ingredient.name}/>
             
             <p  className={styles.price}>
-                <span>{props.price}</span>
+                <span>{ingredient.price}</span>
                 <CurrencyIcon type='primary' />
             </p>
 
             <p className={styles.name}>
-                <span className="text text_type_main-default">{props.name}</span>
+                <span className="text text_type_main-default">{ingredient.name}</span>
             </p>   
 
-            {props.type === "bun" &&
+            {ingredient.type === "bun" &&
                 constructorIngredients.bun &&
                 id === constructorIngredients.bun._id ? (
                 <Counter count={2} size="small" />
@@ -67,14 +69,12 @@ function Ingridient(props) {
                     <IngredientDetails/>
                 </Modal>
             } */}
-        </div>
+        </Link>
     )
 }
 
 Ingridient.propTypes = {
-	name : PropTypes.string.isRequired,
-	image: PropTypes.string.isRequired,
-	price: PropTypes.number.isRequired
+	ingredient: ingredientPropType
 };
 
 export default Ingridient

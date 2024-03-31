@@ -25,10 +25,10 @@ import { fetchIngredients } from '../../services/actions/ingredientsData';
 function App() {
   const navigate = useNavigate();
   const location = useLocation();
-  let background = location.state && location.state.background;
+  const background = location.state && location.state.background;
   const modalIsActive = useSelector((state) => state.modal.ingrdModalActive)
   const currentIngredient = useSelector(store => store.ingrd.currentIngredient)
-
+  const selectedIngredient = location.state && location.state.ingredient;
   
   const dispatch = useDispatch()
 
@@ -66,7 +66,7 @@ function App() {
         <Routes location={location}>
           <Route exact='true' path='/ingredients/:id' element={
             <Modal closeModal={handleModalClose} header={'Детали ингредиента'}>
-              <IngredientDetails ingredient={currentIngredient} />
+              <IngredientDetails ingredient={selectedIngredient} />
             </Modal>
           }/>
         </Routes>
