@@ -9,18 +9,24 @@ import Modal from "../modal/modal";
 import OrderDetails from "../order-details/order-details";
 import { generateID } from "../../utils";
 import { formOrder } from "../../services/actions/orderData";
-import { GET_CONSTRUCTOR_INGREDIENTS, COUNT_ORDER_SUM, PUSH_CONSTRUCTOR_INGREDIENT, OPEN_CONSTRUCT_MODAL, SET_DEFAULT_CONSTRUCTOR } from '../../services/actions'
+import { GET_CONSTRUCTOR_INGREDIENTS, COUNT_ORDER_SUM, PUSH_CONSTRUCTOR_INGREDIENT, OPEN_CONSTRUCT_MODAL, SET_DEFAULT_CONSTRUCTOR, CLOSE_MODAL } from '../../services/actions'
 import ConstructorCard from "./constructor-card/constructor-card";
+import { useNavigate} from "react-router-dom";
 
 
 function BurgerConstructor() {   
 
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
+    const authorized = useSelector(store=>store.auth.authorized);
     const modalIsActive = useSelector((state) => state.modal.constructModalActive)
 
     const openModal = () => {
       dispatch({type: OPEN_CONSTRUCT_MODAL})
+    }
+
+    const closeModal = () => {
+      dispatch({type: CLOSE_MODAL}, [dispatch])
     }
 
     const {bun, slop} = useSelector(state => state.ingrd.constructorIngredients)
@@ -45,7 +51,7 @@ function BurgerConstructor() {
     }, [dispatch, slop, bun]);
   
     const onOrderSubmit = () => {
-        if (bun) {
+        if (authorized) {
         const orderArr = [bun._id, ...slop.map((item) => item._id)]
         dispatch(
             formOrder(orderArr)
@@ -53,7 +59,7 @@ function BurgerConstructor() {
         dispatch({
           type: SET_DEFAULT_CONSTRUCTOR
         })
-        openModal();}
+        openModal();} else navigate('/login')
     };
   
     const [, ingridientsTarget] = useDrop({
@@ -103,8 +109,8 @@ function BurgerConstructor() {
                     <span className="text text_type_digits-medium">{totalPrice}</span>
                 </p>
                     <CurrencyIcon type="primary"/>
-                    <Button type="primary" htmlType='submit' size="large" onClick={onOrderSubmit}>Оформить заказ</Button>
-                    {modalIsActive && <Modal>
+                    <Button type="primary" disabled={!bun} htmlType='submit' size="large" onClick={onOrderSubmit}>Оформить заказ</Button>
+                    {modalIsActive && <Modal closeModal={closeModal}>
 	                <OrderDetails/>
                 </Modal>}
             </div>

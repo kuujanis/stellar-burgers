@@ -9,20 +9,23 @@ import PropTypes from "prop-types";
 import Modal from "../../modal/modal";
 import IngredientDetails from "../../ingredient-details/ingredient-details";
 import { OPEN_INGRD_MODAL, SELECT_INGREDIENT } from "../../../services/actions";
+import { useNavigate } from "react-router-dom";
 
 function Ingridient(props) {
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
     const modalIsActive = useSelector((state) => state.modal.ingrdModalActive)
     
     const  ingredientsCount  = useSelector(state => state.ingrd.ingredientsCount);
     const  constructorIngredients  = useSelector(state => state.ingrd.constructorIngredients);
+    const  currentIngredient = useSelector(state => state.ingrd.currentIngredient)
   
     const onIngredientClick = () => {
         dispatch({type: OPEN_INGRD_MODAL})
         dispatch({
             type: SELECT_INGREDIENT, 
             currentIngredient: props })
+        console.log(currentIngredient)
     };
 
     const id = props._id;
@@ -59,10 +62,11 @@ function Ingridient(props) {
             }
             </div>
             
-            {modalIsActive && <Modal header="Детали ингредиента">
-	            <IngredientDetails {...props}/>
-            </Modal>
-            }
+            {/* {modalIsActive && 
+                <Modal header="Детали ингредиента">
+                    <IngredientDetails/>
+                </Modal>
+            } */}
         </div>
     )
 }

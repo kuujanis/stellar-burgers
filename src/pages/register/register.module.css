@@ -1,0 +1,29 @@
+.register_main {
+    margin: 12vh auto;
+    width: 480px;
+}
+  
+.register_title {
+    text-align: center;
+}
+  
+.register_form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4vh;
+}
+  
+.link {
+    text-decoration: none;
+    color: #4C4CFF;
+    transition: opacity 0.1s ease-in-out;
+}
+  
+.link:hover {
+    opacity: 0.8;
+}
+  
+.note {
+    text-align: center;
+}

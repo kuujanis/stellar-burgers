@@ -1,0 +1,43 @@
+.profile_main {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    max-width: 1320px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    gap: 60px;
+}
+.profile_col {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+}
+.profile_sidebar {
+    display: flex;
+    flex-direction: column;
+    max-width: 320px;
+    gap: 24px;
+}
+.link   {
+    text-decoration: none;
+    transition: opacity 0.1s ease-in-out;
+    display: flex;
+    text-align: center;
+    align-items: center;
+}
+.link:hover {
+    opacity: 0.8;
+}
+.note {
+    opacity: 0.4;
+}
+.selected {
+    color: #F2F2F3;
+    text-decoration: none;
+}
+.profile_form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}

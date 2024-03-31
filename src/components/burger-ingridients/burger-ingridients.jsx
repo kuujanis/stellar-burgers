@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch} from 'react-redux'
 import { useInView } from "react-intersection-observer";
+import { Link, useLocation } from "react-router-dom";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingridients.module.css'
@@ -14,6 +15,8 @@ import {fetchIngredients} from '../../services/actions/ingredientsData'
 function BurgerIngridients() {
 
     const [current,setCurrent] = useState('bun');
+
+    var location = useLocation();
 
     const showTab = (tab) => {
         setCurrent(tab);
@@ -40,19 +43,13 @@ function BurgerIngridients() {
 
     //data
 
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchIngredients())
-    }, [dispatch])
-
     const ingredients = useSelector(state => state.ingrd.ingredients);
 
     const renderIngridient = (props) => {
         return (
-            <li key={props._id}>
+            <Link className={styles.nonlink} key={props._id} to={`/ingredients/${props._id}`} state={{background: location }} >
                 <Ingridient {...props}/>
-            </li>
+            </Link>
         )};
 
     const ingredientsBun = ingredients.filter((itm)=>itm.type==='bun' && itm);

@@ -151,7 +151,7 @@ export const ingredientReducer = (state = initialState, action) => {
                         slop: []
                     },
                       currentIngredient: {},
-                      ingredientsCount: {},
+                      ingredientsCount: 0,
                       totalPrice: 0,
                 }
             }
@@ -160,9 +160,8 @@ export const ingredientReducer = (state = initialState, action) => {
               return {
                 ...state,
                 totalPrice:
-                  action.slop && action.bun
-                    ? action.slop.reduce((acc, item) => acc + item.price, 0) + action.bun.price * 2
-                    : 0,
+                  action.slop && action.bun &&
+                  action?.slop?.reduce((acc, {price}) => acc + price, action.bun.price * 2) || 0
               };
             }
         default: return state
