@@ -8,12 +8,8 @@ import { useDispatch } from "react-redux";
 import { CLOSE_MODAL } from '../../services/actions';
 
 
-const Modal = (props) => {
-	const dispatch = useDispatch();
+const Modal = ({closeModal, children, header}) => {
 
-    const closeModal = () => {
-      dispatch({type: CLOSE_MODAL}, [dispatch])
-    }
 
 	useEffect(() => {
 		const onEscDown = (evt) => (evt.key === "Escape") && closeModal();
@@ -21,7 +17,7 @@ const Modal = (props) => {
 		return () => {
 			document.removeEventListener('keydown', onEscDown);
 		}
-	});
+	}, []);
 	
 
     return ReactDOM.createPortal(
@@ -30,13 +26,13 @@ const Modal = (props) => {
 			<ModalOverlay setModalActive={closeModal}/>
 	        <div className={styles.modal} onClick={e=>e.stopPropagation()}>       
 		        <div className={styles.modal_title}>
-					<span className="text text_type_main-medium">{props.header}</span>
+					<span className="text text_type_main-medium">{header}</span>
 			       
             			<CloseIcon type="primary" onClick={closeModal}/>
           			
 		        </div>
 				<div className='mt-10'>
-					{props.children}
+					{children}
 				</div>
 		        
 	        </div>

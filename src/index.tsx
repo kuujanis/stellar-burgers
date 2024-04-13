@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter } from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './components/app/app';
@@ -10,11 +11,13 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
-  <React.StrictMode>
-    <Provider store = {store}>
-      <App />
-      </Provider>
-    </React.StrictMode>
+  <BrowserRouter>
+    <React.StrictMode>
+      <Provider store = {store}>
+        <App />
+        </Provider>
+      </React.StrictMode>
+  </BrowserRouter>
 );
 
 reportWebVitals();

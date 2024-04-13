@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch} from 'react-redux'
 import { useInView } from "react-intersection-observer";
+import { Link, useLocation } from "react-router-dom";
 
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingridients.module.css'
@@ -40,24 +41,17 @@ function BurgerIngridients() {
 
     //data
 
-    const dispatch = useDispatch()
-
-    useEffect(() => {
-        dispatch(fetchIngredients())
-    }, [dispatch])
-
     const ingredients = useSelector(state => state.ingrd.ingredients);
 
-    const renderIngridient = (props) => {
+    const renderIngridient = (ingredient) => {
         return (
-            <li key={props._id}>
-                <Ingridient {...props}/>
-            </li>
+            <Ingridient ingredient={ingredient} key={ingredient._id}/>
         )};
 
     const ingredientsBun = ingredients.filter((itm)=>itm.type==='bun' && itm);
 	const ingredientsSlop = ingredients.filter((itm)=>itm.type==='main'&& itm);
 	const ingredientsSauce=ingredients.filter((itm)=>itm.type==='sauce' && itm);
+    
 
     return(
         <section className={styles.collumn}>

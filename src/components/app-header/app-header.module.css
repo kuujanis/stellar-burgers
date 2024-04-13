@@ -9,7 +9,7 @@
   }
 
   .link {
-    composes: pr-5 pl-5 pt-4 pb-4 from global;
+    composes: pr-5 pl-5 pt-4 pb-4 mr-5 ml-5 from global;
     text-decoration: none;
     border-radius: 40px;
     color: #8585ad;

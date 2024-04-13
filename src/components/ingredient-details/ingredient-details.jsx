@@ -2,24 +2,28 @@ import React from 'react';
 import styles from "./ingredient-details.module.css";
 import PropTypes from 'prop-types';
 import ingridientPropType from '../../utils/type';
+import { useSelector } from 'react-redux';
 
-const IngredientDetails = (props) => {
+const IngredientDetails = ({ingredient}) => {
+
+	// const ingredient = useSelector(state => state.ingrd.currentIngredient)
+
 	return(
 		<div className={styles.ingredient_modal}> 
-			<img src={props.image} alt={props.name} className={styles.ingredient_pic}/>
-			<span className="text text_type_main-medium">{props.name}</span>
+			<img src={ingredient.image} alt={ingredient.name} className={styles.ingredient_pic}/>
+			<span className="text text_type_main-medium">{ingredient.name}</span>
 			<div className={styles.ingredient_energy}>
 				<span className="text text_type_main-small text_color_inactive">
-                    Калории, ккал<br/>{props.calories}
+                    Калории, ккал<br/>{ingredient.calories}
                 </span>
 				<span className="text text_type_main-small text_color_inactive">
-                    Белки, г<br/>{props.proteins}
+                    Белки, г<br/>{ingredient.proteins}
                 </span>
 				<span className="text text_type_main-small text_color_inactive">
-                    Жиры, г<br/>{props.fat}
+                    Жиры, г<br/>{ingredient.fat}
                 </span>
 				<span className="text text_type_main-small text_color_inactive">
-                    Углеводы, г<br/>{props.carbohydrates}
+                    Углеводы, г<br/>{ingredient.carbohydrates}
                 </span>
 			</div>
 		</div>
