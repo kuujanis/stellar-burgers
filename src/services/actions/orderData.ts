@@ -2,7 +2,7 @@ import { Dispatch } from "redux";
 import { POST_ORDER_ERROR, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from ".";
 import {postURL} from '../../utils'
 
-export const formOrder = (orderList: Array<string>) => {
+export const formOrder = (orderList: Array<string|undefined>) => {
     return function (dispatch: Dispatch) {
         dispatch({
             type: POST_ORDER_REQUEST,

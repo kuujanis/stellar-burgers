@@ -2,7 +2,6 @@ import { Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-dev
 import styles from './burger-constructor.module.css'
 
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 
 import Modal from "../modal/modal";
@@ -53,9 +52,8 @@ function BurgerConstructor() {
   
     const onOrderSubmit = () => {
         if (authorized) {
-        const orderArr = [bun._id, ...slop.map((item:TCard) => item._id)]
         dispatch(
-            formOrder(orderArr)
+            formOrder([bun?._id, ...slop.map((item:TCard) => item._id)])
         );
         dispatch({
           type: SET_DEFAULT_CONSTRUCTOR

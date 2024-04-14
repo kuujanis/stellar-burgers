@@ -3,7 +3,7 @@ import styles from './constructor-card.module.css'
 
 import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { useRef, useCallback, FC } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
