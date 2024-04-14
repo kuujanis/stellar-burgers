@@ -1,9 +1,9 @@
 import {FC} from 'react';
 import styles from "./ingredient-details.module.css";
-import { TCard } from '../../utils';
+import { TIngrd } from '../../utils/type';
 
 type TIngredientDetails = {
-	ingredient?:TCard
+	ingredient?:TIngrd
 }
 
 const IngredientDetails: FC<TIngredientDetails> = ({ingredient}) => {

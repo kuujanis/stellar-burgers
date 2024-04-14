@@ -9,10 +9,10 @@ import OrderDetails from "../order-details/order-details";
 import { generateID } from "../../utils";
 import { formOrder } from "../../services/actions/orderData";
 import { GET_CONSTRUCTOR_INGREDIENTS, COUNT_ORDER_SUM, PUSH_CONSTRUCTOR_INGREDIENT, OPEN_CONSTRUCT_MODAL, SET_DEFAULT_CONSTRUCTOR, CLOSE_MODAL } from '../../services/actions'
-import ConstructorCard from "./constructor-card/constructor-card";
+import {ConstructorItem} from "./constructor-item/constructor-item";
 import { useNavigate} from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../services/store";
-import { TCard, TDraggingCard } from "../../utils";
+import { TIngrd, TDragable } from "../../utils/type";
 
 function BurgerConstructor() {   
 
@@ -53,7 +53,7 @@ function BurgerConstructor() {
     const onOrderSubmit = () => {
         if (authorized) {
         dispatch(
-            formOrder([bun?._id, ...slop.map((item:TCard) => item._id)])
+            formOrder([bun?._id, ...slop.map((item:TIngrd) => item._id)])
         );
         dispatch({
           type: SET_DEFAULT_CONSTRUCTOR
@@ -67,7 +67,7 @@ function BurgerConstructor() {
         dispatch({
           type: PUSH_CONSTRUCTOR_INGREDIENT,
           draggedIngridient: ingredients.find(
-            (item:TCard) => item._id === ingredient.id
+            (item:TIngrd) => item._id === ingredient.id
           ),
           dragId: generateID(),
         });
@@ -87,8 +87,8 @@ function BurgerConstructor() {
             </div>}
             
                 <ul className={styles.scrolldiv + ' ' + styles.orderlist}>
-                    {slop.map((item:TDraggingCard, i:number) => (
-                        <ConstructorCard item={item} key={item.dragId} index={i} />
+                    {slop.map((item:TDragable, i:number) => (
+                        <ConstructorItem item={item} key={item.dragId} index={i} />
                     ))}
                 </ul>
             

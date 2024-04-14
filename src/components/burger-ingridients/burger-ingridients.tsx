@@ -4,7 +4,7 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingridients.module.css'
 import Ingridient from "./ingridient/ingridient";
 
-import { TCard } from "../../utils";
+import { TIngrd } from "../../utils/type";
 import { useAppSelector } from "../../services/store";
 
 
@@ -40,14 +40,14 @@ const BurgerIngridients = () => {
 
     const ingredients = useAppSelector(state => state.ingrd.ingredients);
 
-    const renderIngridient = (ingredient:TCard) => {
+    const renderIngridient = (ingredient:TIngrd) => {
         return (
             <Ingridient ingredient={ingredient} key={ingredient._id}/>
         )};
 
-    const ingredientsBun = ingredients.filter((itm:TCard)=>itm.type==='bun' && itm);
-	const ingredientsSlop = ingredients.filter((itm:TCard)=>itm.type==='main'&& itm);
-	const ingredientsSauce=ingredients.filter((itm:TCard)=>itm.type==='sauce' && itm);
+    const ingredientsBun = ingredients.filter((itm:TIngrd)=>itm.type==='bun' && itm);
+	const ingredientsSlop = ingredients.filter((itm:TIngrd)=>itm.type==='main'&& itm);
+	const ingredientsSauce=ingredients.filter((itm:TIngrd)=>itm.type==='sauce' && itm);
     
 
     return(

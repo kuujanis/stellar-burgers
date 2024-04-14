@@ -7,9 +7,9 @@ import { OPEN_INGRD_MODAL, SELECT_INGREDIENT } from "../../../services/actions";
 import { Link, useLocation } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../../services/store";
 import { FC } from "react";
-import { TCard } from "../../../utils";
+import { TIngrd } from "../../../utils/type";
 
-type TIngredient = {ingredient: TCard}
+type TIngredient = {ingredient: TIngrd}
 
 const Ingridient: FC<TIngredient> = ({ingredient}) => {
     const dispatch = useAppDispatch();

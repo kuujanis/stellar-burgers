@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
-import { TCard } from '../../utils';
+import { TIngrd } from '../../utils/type';
 import { useAppSelector } from '../../services/store';
 
 export const IngredientDetailsPage = () => {
@@ -9,8 +9,8 @@ export const IngredientDetailsPage = () => {
     return(
         <>
             {ingredients
-                .filter((item:TCard) => item._id === id)
-                .map((item:TCard) => (
+                .filter((item:TIngrd) => item._id === id)
+                .map((item:TIngrd) => (
                 <IngredientDetails ingredient={item} key={id} />
             ))}
         </>

@@ -1,5 +1,5 @@
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import styles from './constructor-card.module.css'
+import styles from './constructor-item.module.css'
 
 import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { useRef, useCallback, FC } from "react";
@@ -10,10 +10,10 @@ import {
   REFRESH_CONSTRUCTOR,
 } from "../../../services/actions";
 import { useAppSelector } from "../../../services/store";
-import { TDraggingCard } from "../../../utils";
+import { TDragable } from "../../../utils/type";
 
-type TConstructorCard = {
-  item: TDraggingCard,
+type TConstructorItem = {
+  item: TDragable,
   index: number
 }
 
@@ -22,7 +22,7 @@ type TDragItem = {
   index: number;
 }
 
-const ConstructorCard:FC<TConstructorCard> = ({ item, index }) => {
+export const ConstructorItem:FC<TConstructorItem> = ({ item, index }) => {
   const {slop} = useAppSelector(
     (state) => state.ingrd.constructorIngredients
   );
@@ -36,7 +36,7 @@ const ConstructorCard:FC<TConstructorCard> = ({ item, index }) => {
     type: "constructor-cards",
     item: () => ({
       id: id,
-      index: slop.findIndex((item:TDraggingCard) => item.dragId === id),
+      index: slop.findIndex((item:TDragable) => item.dragId === id),
     }),
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.5 : 1,
@@ -114,5 +114,3 @@ const ConstructorCard:FC<TConstructorCard> = ({ item, index }) => {
     </div>
   );
 }
-
-export default ConstructorCard;

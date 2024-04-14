@@ -1,8 +1,7 @@
-import React, { useEffect, useState, FC} from 'react';
+import React, { useEffect, FC} from 'react';
 import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import styles from './app.module.css'
 
-import { useDispatch, useSelector } from 'react-redux'
 import BurgerIngridients from '../burger-ingridients/burger-ingridients'; 
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -20,14 +19,14 @@ import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { IngredientDetailsPage } from '../../pages/details-page/ingredient-details-page';
 import { fetchIngredients } from '../../services/actions/ingredientsData';
-import {TCard} from '../../utils'
+import {TIngrd} from '../../utils/type'
 import { useAppDispatch } from '../../services/store';
 
 const App: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state.background;
-  const selectedIngredient:TCard = location.state && location.state.ingredient;
+  const selectedIngredient:TIngrd = location.state && location.state.ingredient;
   
   const dispatch = useAppDispatch()
 

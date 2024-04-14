@@ -1,5 +1,7 @@
 import { getCookie } from "./cookies"
 
+export const normaUrl = 'https://norma.nomoreparties.space/api/ingredients '
+export const postURL = 'https://norma.nomoreparties.space/api/orders'
 const authUrl = 'https://norma.nomoreparties.space/api/auth'
 
 const registerUrl = authUrl+'/register'
@@ -8,10 +10,11 @@ const tokenUrl = authUrl+'/token'
 const logoutUrl = authUrl+'/logout'
 const userUrl = authUrl+'/user'
 
-type TPassword = { password: string }
+
 type TLogin = {
   email: string,
-} & TPassword
+  password: string
+}
 type TRegisterRequest = { name: string } & TLogin
 type TUpdateUserRequest = {
     email: string;
