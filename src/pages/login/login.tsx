@@ -1,29 +1,29 @@
-import React, {useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
 import { Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginAction } from '../../services/actions/authorizationData';
 import styles from './login.module.css'
+import { useAppDispatch, useAppSelector } from '../../services/store';
 
 export const LoginPage = () => {
 
-    const authorized = useSelector(store => store.auth.authorized);
+    const authorized = useAppSelector(store => store.auth.authorized);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     let navigate = useNavigate();
     const location = useLocation();
     const [state, setState] = useState({
         email:'',
         password:''
     });
-    const onChange = e =>{
+    const onChange = (e:ChangeEvent<HTMLInputElement>) =>{
         setState({
             ...state,
             [e.target.name]:e.target.value
         });
     };
 
-    const onSubmit = e => {
+    const onSubmit = (e:SyntheticEvent) => {
         e.preventDefault();
         dispatch(loginAction(state))
             .then(() => {
@@ -31,8 +31,6 @@ export const LoginPage = () => {
                 navigate({ pathname: location.state?.from?.pathname || '/' })
             });
     };
-
-
 
     return authorized ? <Navigate to='/' replace /> : (
         <section className={styles.login_main}>

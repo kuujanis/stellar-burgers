@@ -1,29 +1,31 @@
-import { useEffect } from 'react';
+import { ReactNode, useEffect, FC } from 'react';
 import ReactDOM from 'react-dom';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import PropTypes from 'prop-types';
-import { useDispatch } from "react-redux";
-import { CLOSE_MODAL } from '../../services/actions';
 
+type TModal = {
+	closeModal: () => void,
+	children: ReactNode,
+	header?: string
+}
+const root = document.querySelector('#modal-root') as HTMLDivElement
 
-const Modal = ({closeModal, children, header}) => {
+const Modal: FC<TModal> = ({closeModal, children, header}) => {
 
 
 	useEffect(() => {
-		const onEscDown = (evt) => (evt.key === "Escape") && closeModal();
+		const onEscDown = (evt: {key: string}) => (evt.key === "Escape") && closeModal();
 		document.addEventListener('keydown', onEscDown);
 		return () => {
 			document.removeEventListener('keydown', onEscDown);
 		}
 	}, []);
 	
-
     return ReactDOM.createPortal(
 		
 	    <div className={styles.modal_overlay}>
-			<ModalOverlay setModalActive={closeModal}/>
+			<ModalOverlay closeModal={closeModal}/>
 	        <div className={styles.modal} onClick={e=>e.stopPropagation()}>       
 		        <div className={styles.modal_title}>
 					<span className="text text_type_main-medium">{header}</span>
@@ -36,15 +38,10 @@ const Modal = ({closeModal, children, header}) => {
 				</div>
 		        
 	        </div>
-		
+			
         </div>,
-        document.querySelector('#modal-root')
+        root
     );
 }
-
-Modal.propTypes = {
-	children: PropTypes.node.isRequired
-};
-
 
 export default Modal

@@ -12,14 +12,15 @@ import { formOrder } from "../../services/actions/orderData";
 import { GET_CONSTRUCTOR_INGREDIENTS, COUNT_ORDER_SUM, PUSH_CONSTRUCTOR_INGREDIENT, OPEN_CONSTRUCT_MODAL, SET_DEFAULT_CONSTRUCTOR, CLOSE_MODAL } from '../../services/actions'
 import ConstructorCard from "./constructor-card/constructor-card";
 import { useNavigate} from "react-router-dom";
-
+import { useAppDispatch, useAppSelector } from "../../services/store";
+import { TCard, TDraggingCard } from "../../utils";
 
 function BurgerConstructor() {   
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const authorized = useSelector(store=>store.auth.authorized);
-    const modalIsActive = useSelector((state) => state.modal.constructModalActive)
+    const authorized = useAppSelector(store=>store.auth.authorized);
+    const modalIsActive = useAppSelector((state) => state.modal.constructModalActive)
 
     const openModal = () => {
       dispatch({type: OPEN_CONSTRUCT_MODAL})
@@ -29,10 +30,10 @@ function BurgerConstructor() {
       dispatch({type: CLOSE_MODAL}, [dispatch])
     }
 
-    const {bun, slop} = useSelector(state => state.ingrd.constructorIngredients)
-    const constructorIngredients = useSelector(state => state.ingrd.constructorIngredients)
-    const ingredients = useSelector((state) => state.ingrd.ingredients);
-    const totalPrice = useSelector((state) => state.ingrd.totalPrice);
+    const {bun, slop} = useAppSelector(state => state.ingrd.constructorIngredients)
+    const constructorIngredients = useAppSelector(state => state.ingrd.constructorIngredients)
+    const ingredients = useAppSelector((state) => state.ingrd.ingredients);
+    const totalPrice = useAppSelector((state) => state.ingrd.totalPrice);
 
   
     useEffect(() => {
@@ -52,7 +53,7 @@ function BurgerConstructor() {
   
     const onOrderSubmit = () => {
         if (authorized) {
-        const orderArr = [bun._id, ...slop.map((item) => item._id)]
+        const orderArr = [bun._id, ...slop.map((item:TCard) => item._id)]
         dispatch(
             formOrder(orderArr)
         );
@@ -64,11 +65,11 @@ function BurgerConstructor() {
   
     const [, ingridientsTarget] = useDrop({
       accept: "ingredients",
-      drop(ingredient) {
+      drop(ingredient:{id:string}) {
         dispatch({
           type: PUSH_CONSTRUCTOR_INGREDIENT,
           draggedIngridient: ingredients.find(
-            (item) => item._id === ingredient.id
+            (item:TCard) => item._id === ingredient.id
           ),
           dragId: generateID(),
         });
@@ -88,7 +89,7 @@ function BurgerConstructor() {
             </div>}
             
                 <ul className={styles.scrolldiv + ' ' + styles.orderlist}>
-                    {slop.map((item, i) => (
+                    {slop.map((item:TDraggingCard, i:number) => (
                         <ConstructorCard item={item} key={item.dragId} index={i} />
                     ))}
                 </ul>

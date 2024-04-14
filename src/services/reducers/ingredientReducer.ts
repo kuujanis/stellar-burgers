@@ -1,3 +1,5 @@
+import { UnknownAction } from "redux";
+import { TCard, TDraggingCard } from "../../utils";
 import { 
     FETCH_INGREDIENTS_REQUEST,
     FETCH_INGREDIENTS_SUCCESS,
@@ -14,7 +16,22 @@ import {
     COUNT_ORDER_SUM
    } from "../actions";
 
-const initialState = {
+type TIngredientsState = {
+  ingredients: TCard[];
+  fetchRequest: boolean,
+  fetchFailed: boolean,
+  constructorIngredients: {
+    bun: TDraggingCard | null,
+    slop: TDraggingCard[]
+  },
+  ingredientsCount: { [id: string]: number },
+  currentIngredient: TCard | null,
+
+  orderNumber: number,
+  totalPrice: number
+}
+
+const initialState:TIngredientsState = {
     ingredients: [],
     fetchRequest: false,
     fetchFailed: false,
@@ -22,15 +39,13 @@ const initialState = {
       bun: null,
       slop: []
     },
-    orderRequest: false,
-    orderFailed: false,
-    currentIngredient: {},
+    currentIngredient: null,
     ingredientsCount: {},
     orderNumber: 0,
-    totalPrice: 0,
+    totalPrice: 0
 }
 
-export const ingredientReducer = (state = initialState, action) => {
+export const ingredientReducer = (state = initialState, action:UnknownAction) => {
     switch(action.type) {
         case FETCH_INGREDIENTS_SUCCESS:
             return {
@@ -81,12 +96,7 @@ export const ingredientReducer = (state = initialState, action) => {
             case GET_CONSTRUCTOR_INGREDIENTS: {
               return {
                 ...state,
-                constructorIngredients: {
-                  bun: action.ingredients.bun,
-                  slop: action.ingredients.slop.filter(
-                    (item) => item.type !== "bun"
-                  ),
-                },
+                constructorIngredients: action.ingredients
               };
             }
             case PUSH_CONSTRUCTOR_INGREDIENT: {
@@ -160,10 +170,10 @@ export const ingredientReducer = (state = initialState, action) => {
               return {
                 ...state,
                 totalPrice:
-                  action.slop && action.bun &&
-                  action?.slop?.reduce((acc, {price}) => acc + price, action.bun.price * 2) || 0
+                  action.slop && action.bun ?
+                  action?.slop?.reduce((acc:number, item:TCard) => acc + item.price, 0) + action.bun.price * 2 : 0
               };
             }
-        default: return state
+        default: {return state}
     }
 }

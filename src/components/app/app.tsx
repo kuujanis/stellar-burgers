@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, FC} from 'react';
 import {Route, Routes, useLocation, useNavigate} from "react-router-dom";
 import styles from './app.module.css'
 
@@ -14,23 +14,22 @@ import { RegisterPage } from '../../pages/register/register';
 import { ForgotPasswordPage } from '../../pages/forgot-password/forgot-password';
 import { ResetPasswordPage } from '../../pages/reset-password/reset-password';
 import { ProtectedRoute } from '../protected-route/protected-route';
-// import { MainPage } from '../main/main';
 import { LoginPage } from '../../pages/login/login';
 import { NotFoundPage } from '../../pages/not-found/not-found';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import { IngredientDetailsPage } from '../../pages/details-page/ingredient-details-page';
 import { fetchIngredients } from '../../services/actions/ingredientsData';
+import {TCard} from '../../utils'
+import { useAppDispatch } from '../../services/store';
 
-function App() {
+const App: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const background = location.state && location.state.background;
-  const modalIsActive = useSelector((state) => state.modal.ingrdModalActive)
-  const currentIngredient = useSelector(store => store.ingrd.currentIngredient)
-  const selectedIngredient = location.state && location.state.ingredient;
+  const selectedIngredient:TCard = location.state && location.state.ingredient;
   
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
       dispatch(fetchIngredients())
@@ -44,7 +43,7 @@ function App() {
     <div className={styles.main}>
       <AppHeader />
       <Routes location={background || location}>
-        <Route exact='true' path='/' element={
+        <Route path='/' element={
           <main className={styles.frame}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngridients/>
@@ -52,19 +51,19 @@ function App() {
             </DndProvider>
           </main>
         } />
-        <Route exact='true' path='/login' element={<LoginPage />} />
-        <Route exact='true' path='/register' element={<RegisterPage />} />
-        <Route exact='true' path='/forgot-password' element={<ForgotPasswordPage />} />
-        <Route exact='true' path='/reset-password' element={<ResetPasswordPage/>} />
-        <Route exact='true' path='/ingredients/:id' element={<IngredientDetailsPage/>} />
-        <Route exact='true' path='/profile' element={<ProtectedRoute element={<ProfilePage />}/>}/>
-        <Route exact='true' path='*' element={<NotFoundPage/>} />
+        <Route path='/login' element={<LoginPage />} />
+        <Route path='/register' element={<RegisterPage />} />
+        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
+        <Route path='/reset-password' element={<ResetPasswordPage/>} />
+        <Route path='/ingredients/:id' element={<IngredientDetailsPage/>} />
+        <Route path='/profile' element={<ProtectedRoute element={<ProfilePage />}/>}/>
+        <Route path='*' element={<NotFoundPage/>} />
 
       </Routes>
         
       {background &&
         <Routes location={location}>
-          <Route exact='true' path='/ingredients/:id' element={
+          <Route path='/ingredients/:id' element={
             <Modal closeModal={handleModalClose} header={'Детали ингредиента'}>
               <IngredientDetails ingredient={selectedIngredient} />
             </Modal>

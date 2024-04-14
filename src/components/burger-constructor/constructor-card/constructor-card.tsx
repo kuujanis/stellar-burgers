@@ -1,25 +1,33 @@
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './constructor-card.module.css'
 
-import { useDrag, useDrop } from "react-dnd";
-import { useRef, useCallback } from "react";
+import { XYCoord, useDrag, useDrop } from "react-dnd";
+import { useRef, useCallback, FC } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
-import PropTypes from "prop-types";
-import ingredientPropType from "../../../utils/type";
 
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   REFRESH_CONSTRUCTOR,
 } from "../../../services/actions";
+import { useAppSelector } from "../../../services/store";
+import { TDraggingCard } from "../../../utils";
 
+type TConstructorCard = {
+  item: TDraggingCard,
+  index: number
+}
 
-function ConstructorCard({ item, index }) {
-  const slop = useSelector(
-    state => state.ingrd.constructorIngredients.slop
+type TDragItem = {
+  id: string;
+  index: number;
+}
+
+const ConstructorCard:FC<TConstructorCard> = ({ item, index }) => {
+  const {slop} = useAppSelector(
+    (state) => state.ingrd.constructorIngredients
   );
   const dispatch = useDispatch();
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const id = item.dragId;
 
 //   console.log(slop)
@@ -28,7 +36,7 @@ function ConstructorCard({ item, index }) {
     type: "constructor-cards",
     item: () => ({
       id: id,
-      index: slop.findIndex((item) => item.dragId === id),
+      index: slop.findIndex((item:TDraggingCard) => item.dragId === id),
     }),
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.5 : 1,
@@ -36,7 +44,7 @@ function ConstructorCard({ item, index }) {
   });
 
   const moveCard = useCallback(
-    (dragIndex, hoverIndex) => {
+    (dragIndex:number, hoverIndex:number) => {
       const dragCard = slop[dragIndex];
       const newCards = [...slop];
       newCards.splice(dragIndex, 1);
@@ -52,7 +60,7 @@ function ConstructorCard({ item, index }) {
 
   const [, drop] = useDrop({
     accept: "constructor-cards",
-    hover(item, monitor) {
+    hover(item:TDragItem, monitor) {
       if (!ref.current) {
         return;
       }
@@ -64,7 +72,7 @@ function ConstructorCard({ item, index }) {
       const hoverBoundingRect = ref.current?.getBoundingClientRect();
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
-      const clientOffset = monitor.getClientOffset();
+      const clientOffset = monitor.getClientOffset() as XYCoord;
       const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
       if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
@@ -81,14 +89,13 @@ function ConstructorCard({ item, index }) {
   });
 
   if (item.type !== "bun") drag(drop(ref));
-  const preventDefault = (e) => e.preventDefault();
 
   return (
     <div
       className={styles.card}
       ref={ref}
       style={{ opacity }}
-      onDrop={preventDefault}
+      onDrop={e => e.preventDefault()}
     >
       <div className="pr-2">
         <DragIcon type="primary" />
@@ -107,13 +114,5 @@ function ConstructorCard({ item, index }) {
     </div>
   );
 }
-
-ConstructorCard.propTypes = {
-  item: PropTypes.shape({
-    ...ingredientPropType,
-    dragId: PropTypes.string.isRequired
-  }).isRequired,
-  index: PropTypes.number.isRequired,
-};
 
 export default ConstructorCard;

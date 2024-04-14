@@ -1,3 +1,5 @@
+import { getCookie } from "./cookies"
+
 const authUrl = 'https://norma.nomoreparties.space/api/auth'
 
 const registerUrl = authUrl+'/register'
@@ -6,7 +8,17 @@ const tokenUrl = authUrl+'/token'
 const logoutUrl = authUrl+'/logout'
 const userUrl = authUrl+'/user'
 
-const checkResponse = response => {
+type TPassword = { password: string }
+type TLogin = {
+  email: string,
+} & TPassword
+type TRegisterRequest = { name: string } & TLogin
+type TUpdateUserRequest = {
+    email: string;
+    name: string;
+  }
+
+const checkResponse = (response : Response) => {
     if (response.ok) {
         return response.json();
     } else {
@@ -14,7 +26,7 @@ const checkResponse = response => {
     }
 }
 
-export const registerRequest = ({email, password, name}) => {
+export const registerRequest = ({email, password, name}: TRegisterRequest) => {
     return fetch(registerUrl, {
             method: 'POST',
             headers: {
@@ -26,7 +38,7 @@ export const registerRequest = ({email, password, name}) => {
     .then(res => checkResponse(res));
 };
 
-export const loginRequest = ({ email, password }) => {
+export const loginRequest = ({ email, password }:TLogin) => {
     return fetch(loginUrl, {
         method: 'POST',
         headers: {
@@ -64,22 +76,22 @@ export const logoutRequest = () => {
 };
 
 
-export const getUserRequest = (token) => {
+export const getUserRequest = () => {
     return fetch(userUrl, {
         method : 'GET',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            Authorization: 'Bearer ' + token
+            Authorization: 'Bearer ' + getCookie('token')
         }
     })
     .then(res => checkResponse(res));
 };
-export const updateUserRequest = (email, name, token) => {
+export const updateUserRequest = ({email, name}:TUpdateUserRequest) => {
     return fetch(userUrl, {
         method : 'PATCH',
         headers: {
             'Content-Type': 'application/json;charset=utf-8',
-            Authorization: 'Bearer ' + token
+            Authorization: 'Bearer ' + getCookie('token')
         },
         body: JSON.stringify({email, name})
     })

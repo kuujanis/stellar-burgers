@@ -1,8 +1,9 @@
+import { Dispatch } from "redux";
 import { FETCH_INGREDIENTS_ERROR, FETCH_INGREDIENTS_REQUEST, FETCH_INGREDIENTS_SUCCESS } from ".";
 import {normaUrl} from '../../utils'
 
 export const fetchIngredients = () => {
-    return function(dispatch) {
+    return function(dispatch:Dispatch) {
         dispatch({
             type: FETCH_INGREDIENTS_REQUEST,
         })
