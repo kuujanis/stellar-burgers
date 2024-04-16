@@ -1,17 +1,18 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import { useState, SyntheticEvent, ChangeEvent } from "react";
+import { useState, SyntheticEvent, ChangeEvent, FormEvent } from "react";
 import { Link, useNavigate, Navigate } from 'react-router-dom';
 import styles from './forgot-password.module.css'
 import { useAppSelector } from "../../services/store";
+import { forgotUrl } from "../../utils/api";
 
 export const ForgotPasswordPage = () => {
     const [email, setEmail] = useState('');
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const authorized = useAppSelector(store => store.auth.authorized);
 
-    const onSubmit = (e: SyntheticEvent) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        fetch('https://norma.nomoreparties.space/api/password-reset',{
+        fetch(forgotUrl,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'

@@ -9,16 +9,13 @@ import {
     GET_USER_FAILED, REFRESH_TOKEN_FAILED, REFRESH_TOKEN_SUCCESS
 } from '../actions/index';
 import {getCookie} from "../../utils/cookies";
-import { UnknownAction } from 'redux'
+import { TAuthActions, TUser } from '../../utils/type';
+
 
 type TAuthStore = {
     login: Boolean,
     authorized: Boolean,
-    user: {
-        name: String,
-        email: String,
-        password: String
-    }
+    user: TUser
 }
 
 const initialState =
@@ -26,18 +23,18 @@ const initialState =
         login: false,
         authorized : !!getCookie('token'),
         user: {
-            name:'',
             email:'',
-            password:''
+            password:'',
+            name:''
         }
 };
 
-export const authorizationReducer = (state:TAuthStore = initialState, action: UnknownAction) => {
+export const authorizationReducer = (state:TAuthStore = initialState, action: TAuthActions) => {
     switch (action.type) {
 
         case REGISTER_SUCCESS: {
-            const userObj = action.user;
-            console.log(userObj)
+            // const userObj = action.user;
+            // console.log(userObj)
             return {
                 ...state
             };
@@ -64,7 +61,8 @@ export const authorizationReducer = (state:TAuthStore = initialState, action: Un
                 authorized : false,
                 user: {
                     name : '',
-                    email: ''
+                    email: '',
+                    password: ''
                 }
             };
         }
@@ -75,7 +73,8 @@ export const authorizationReducer = (state:TAuthStore = initialState, action: Un
                 getUserRequest : true,
                 user: {
                     name : '',
-                    email: ''
+                    email: '',
+                    password: ''
                 }
             }
         }
@@ -94,7 +93,8 @@ export const authorizationReducer = (state:TAuthStore = initialState, action: Un
                 authorized: false,
                 user: {
                     name : '',
-                    email: ''
+                    email: '',
+                    password: ''
                 }
             }
         }

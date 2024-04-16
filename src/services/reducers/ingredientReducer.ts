@@ -168,7 +168,7 @@ export const ingredientReducer = (state:TIngredientsState = initialState, action
                 ...state,
                 totalPrice:
                   action.slop && action.bun ?
-                  action?.slop?.reduce((acc:number, item:TIngrd) => acc + item.price, 0) + action.bun.price * 2 : 0
+                  action?.slop?.reduce((acc:number, item) => acc + item.price, 0) + action.bun.price * 2 : 0
               };
             }
         default: {return state}

@@ -10,7 +10,7 @@ import {
     getUserRequest,
     updateUserRequest} from '../../utils/api';
 import { setCookie, delCookie } from "../../utils/cookies";
-import { Dispatch } from "redux";
+import { AppDispatch } from "../store";
 
 type TRegister = {
     email: string,
@@ -27,7 +27,7 @@ type TUpdate = {
 }
 
 export const registerAction = ({email, password, name}:TRegister) => {
-    return function (dispatch:Dispatch) {
+    return function (dispatch:AppDispatch) {
         registerRequest({email, password, name})
         .then((res) => {
             if (res && res.success) {
@@ -56,7 +56,7 @@ export const registerAction = ({email, password, name}:TRegister) => {
 }
 
 export function loginAction ({email, password}:TLogin) {
-    return function (dispatch:Dispatch) {
+    return function (dispatch:AppDispatch) {
         return loginRequest({email, password})
             .then((res) => {
                 if (res && res.success) {
@@ -81,7 +81,7 @@ export function loginAction ({email, password}:TLogin) {
 };
 
 export const refreshTokenAction = () => {
-    return function (dispatch:Dispatch) {
+    return function (dispatch:AppDispatch) {
         dispatch({
             type: REFRESH_TOKEN_REQUEST
         });
@@ -106,7 +106,7 @@ export const refreshTokenAction = () => {
 }
 
 export const logoutAction = () => {
-    return function (dispatch:Dispatch) {
+    return function (dispatch:AppDispatch) {
         logoutRequest()
             .then((res) => {
                 if (res && res.success) {
@@ -124,7 +124,7 @@ export const logoutAction = () => {
 };
 
 export const getUserAction = () => {
-    return function (dispatch:Dispatch) {
+    return function (dispatch:AppDispatch) {
         dispatch({
             type: GET_USER_REQUEST
         });
@@ -149,7 +149,7 @@ export const getUserAction = () => {
     };
 };
 export const updateUserAction = ({email, name}: TUpdate) => {
-    return function (dispatch:Dispatch) {
+    return function (dispatch:AppDispatch) {
         dispatch({
             type: GET_USER_REQUEST
         });

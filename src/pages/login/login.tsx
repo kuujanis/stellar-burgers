@@ -1,4 +1,4 @@
-import React, { ChangeEvent, SyntheticEvent, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Link, useNavigate, Navigate, useLocation } from 'react-router-dom';
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import { loginAction } from '../../services/actions/authorizationData';
@@ -10,7 +10,7 @@ export const LoginPage = () => {
     const authorized = useAppSelector(store => store.auth.authorized);
 
     const dispatch = useAppDispatch();
-    let navigate = useNavigate();
+    const navigate = useNavigate();
     const location = useLocation();
     const [state, setState] = useState({
         email:'',
@@ -23,7 +23,7 @@ export const LoginPage = () => {
         });
     };
 
-    const onSubmit = (e:SyntheticEvent) => {
+    const onSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(loginAction(state))
             .then(() => {

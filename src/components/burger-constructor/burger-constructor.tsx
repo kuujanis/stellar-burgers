@@ -53,7 +53,7 @@ function BurgerConstructor() {
     const onOrderSubmit = () => {
         if (authorized) {
         dispatch(
-            formOrder([bun?._id, ...slop.map((item:TIngrd) => item._id)])
+            formOrder([bun?._id, ...slop.map((item) => item._id)])
         );
         dispatch({
           type: SET_DEFAULT_CONSTRUCTOR
@@ -67,7 +67,7 @@ function BurgerConstructor() {
         dispatch({
           type: PUSH_CONSTRUCTOR_INGREDIENT,
           draggedIngridient: ingredients.find(
-            (item:TIngrd) => item._id === ingredient.id
+            (item) => item._id === ingredient.id
           ),
           dragId: generateID(),
         });
@@ -87,7 +87,7 @@ function BurgerConstructor() {
             </div>}
             
                 <ul className={styles.scrolldiv + ' ' + styles.orderlist}>
-                    {slop.map((item:TDragable, i:number) => (
+                    {slop.map((item, i:number) => (
                         <ConstructorItem item={item} key={item.dragId} index={i} />
                     ))}
                 </ul>

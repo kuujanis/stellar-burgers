@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import IngredientDetails from '../../components/ingredient-details/ingredient-details';
-import { TIngrd } from '../../utils/type';
 import { useAppSelector } from '../../services/store';
 
 export const IngredientDetailsPage = () => {
@@ -9,8 +8,8 @@ export const IngredientDetailsPage = () => {
     return(
         <>
             {ingredients
-                .filter((item:TIngrd) => item._id === id)
-                .map((item:TIngrd) => (
+                .filter((item) => item._id === id)
+                .map((item) => (
                 <IngredientDetails ingredient={item} key={id} />
             ))}
         </>

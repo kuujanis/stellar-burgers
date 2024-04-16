@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react'
-import { useDispatch, useSelector } from "react-redux"
+import { useState, useEffect, FormEvent, ChangeEvent } from 'react'
 import { NavLink} from "react-router-dom";
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import styles from './profile.module.css'
 import { getUserAction, logoutAction, updateUserAction } from '../../services/actions/authorizationData';
+import { useAppDispatch, useAppSelector } from '../../services/store';
+import { TUser } from '../../utils/type';
 
 export const ProfilePage = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const [defaultState, setDefaultState] = useState({email:'',password:'', name:''});
     const [state, setState] = useState({email:'',password:'', name:''});
     const [changed, setChanged] = useState(false)
-    const user = useSelector(store => store.auth.user);
+    const {user} = useAppSelector(store => store.auth);
 
     useEffect(()=>{
         dispatch(getUserAction())
@@ -25,7 +26,7 @@ export const ProfilePage = () => {
         });
     },[user]);
 
-    const onInputChange = e => {
+    const onInputChange = (e:ChangeEvent<HTMLInputElement>) => {
         setState({
             ...state,
             [ e.target.name ]: e.target.value
@@ -33,12 +34,12 @@ export const ProfilePage = () => {
         setChanged(true)
     }
 
-    const onSubmit = e => {
+    const onSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(updateUserAction(state))
     }
 
-    const onReset = e => {
+    const onReset = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setState(defaultState)
         setChanged(false)
@@ -51,21 +52,21 @@ export const ProfilePage = () => {
     return (
         <section className={styles.profile_main + ' pt-20'}>
             <div className={styles.profile_sidebar + ' mr-15'}>
-                <NavLink exact='true' to='/profile' 
+                <NavLink to='/profile' 
                 className={({isActive}) => 
                 !isActive ? 
                 styles.link+' text text_type_main-medium text_color_inactive'
                 : styles.selected+' text text_type_main-medium'}>
                     <span>Профиль</span>
                 </NavLink>
-                <NavLink exact='true' to='/profile/orders' 
+                <NavLink to='/profile/orders' 
                 className={({isActive}) => 
                 !isActive ? 
                 styles.link+' text text_type_main-medium text_color_inactive'
                 : styles.selected+' text text_type_main-medium'}>
                     <span>История заказов</span>
                 </NavLink>
-                <NavLink exact='true' to='/login' onClick={onLogout}
+                <NavLink to='/login' onClick={onLogout}
                 className={({isActive}) => 
                 !isActive ? 
                 styles.link+' text text_type_main-medium text_color_inactive'

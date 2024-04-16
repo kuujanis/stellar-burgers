@@ -3,13 +3,12 @@ import styles from './constructor-item.module.css'
 
 import { XYCoord, useDrag, useDrop } from "react-dnd";
 import { useRef, useCallback, FC } from "react";
-import { useDispatch } from "react-redux";
 
 import {
   DELETE_CONSTRUCTOR_INGREDIENT,
   REFRESH_CONSTRUCTOR,
 } from "../../../services/actions";
-import { useAppSelector } from "../../../services/store";
+import { useAppDispatch, useAppSelector } from "../../../services/store";
 import { TDragable } from "../../../utils/type";
 
 type TConstructorItem = {
@@ -26,7 +25,7 @@ export const ConstructorItem:FC<TConstructorItem> = ({ item, index }) => {
   const {slop} = useAppSelector(
     (state) => state.ingrd.constructorIngredients
   );
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
   const id = item.dragId;
 
@@ -36,7 +35,7 @@ export const ConstructorItem:FC<TConstructorItem> = ({ item, index }) => {
     type: "constructor-cards",
     item: () => ({
       id: id,
-      index: slop.findIndex((item:TDragable) => item.dragId === id),
+      index: slop.findIndex((item) => item.dragId === id),
     }),
     collect: (monitor) => ({
       opacity: monitor.isDragging() ? 0.5 : 1,

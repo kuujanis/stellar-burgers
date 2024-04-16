@@ -1,6 +1,6 @@
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import { Link, Navigate } from "react-router-dom"
-import { ChangeEvent, SyntheticEvent, useState } from "react"
+import { ChangeEvent, FormEvent, useState } from "react"
 import { registerAction } from "../../services/actions/authorizationData"
 import styles from './register.module.css'
 import { useAppDispatch, useAppSelector } from "../../services/store"
@@ -15,7 +15,7 @@ export const RegisterPage = () => {
             [e.target.name] : e.target.value
         })
     };
-    const onSubmit = (e: SyntheticEvent) => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(registerAction({email: formData.email, password: formData.password, name: formData.name}))
         console.log(formData);

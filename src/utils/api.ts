@@ -1,8 +1,9 @@
 import { getCookie } from "./cookies"
 
-export const normaUrl = 'https://norma.nomoreparties.space/api/ingredients '
-export const postURL = 'https://norma.nomoreparties.space/api/orders'
-const authUrl = 'https://norma.nomoreparties.space/api/auth'
+const BASE_URL = 'https://norma.nomoreparties.space/api'
+export const normaUrl = BASE_URL+'/ingredients '
+export const postURL = BASE_URL+'/orders'
+const authUrl = BASE_URL+'/auth'
 
 const registerUrl = authUrl+'/register'
 const loginUrl = authUrl+'/login'
@@ -10,6 +11,8 @@ const tokenUrl = authUrl+'/token'
 const logoutUrl = authUrl+'/logout'
 const userUrl = authUrl+'/user'
 
+export const forgotUrl = BASE_URL+'/password-reset'
+export const resetUrl = forgotUrl+'/reset'
 
 type TLogin = {
   email: string,
@@ -21,9 +24,9 @@ type TUpdateUserRequest = {
     name: string;
   }
 
-const checkResponse = (response : Response) => {
+export const checkResponse = (response : Response) => {
     if (response.ok) {
-        return response.json();
+        return response.json(); 
     } else {
         return Promise.reject(response.status);
     }

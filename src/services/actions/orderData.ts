@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { POST_ORDER_ERROR, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from ".";
-import {postURL} from '../../utils/api'
+import {checkResponse, postURL} from '../../utils/api'
 
 export const formOrder = (orderList: Array<string|undefined>) => {
     return function (dispatch: Dispatch) {
@@ -12,18 +12,12 @@ export const formOrder = (orderList: Array<string|undefined>) => {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({"ingredients": orderList})
         })
-        .then(response => {
-            if (response.ok) {
-                return response.json();
-            } else {
-                throw new Error("Can't post data");
-            }
-        })
-        .then(res => {
-            if (res.success) {
+        .then(res => checkResponse(res))
+        .then(result => {
+            if (result.success) {
                 dispatch({
                     type: POST_ORDER_SUCCESS,
-                    orderNumber: res.order.number
+                    orderNumber: result.order.number
                 })
                 console.log('success')
             }

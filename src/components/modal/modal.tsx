@@ -15,7 +15,7 @@ const Modal: FC<TModal> = ({closeModal, children, header}) => {
 
 
 	useEffect(() => {
-		const onEscDown = (evt: {key: string}) => (evt.key === "Escape") && closeModal();
+		const onEscDown = (evt: KeyboardEvent) => (evt.key === "Escape") && closeModal();
 		document.addEventListener('keydown', onEscDown);
 		return () => {
 			document.removeEventListener('keydown', onEscDown);

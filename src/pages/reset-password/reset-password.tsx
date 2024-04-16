@@ -1,37 +1,25 @@
 import { Input, Button } from "@ya.praktikum/react-developer-burger-ui-components"
-import { SyntheticEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import { Link, Navigate} from 'react-router-dom';
 import styles from './reset-password.module.css'
 import { useAppSelector } from "../../services/store";
+import { checkResponse, resetUrl } from "../../utils/api";
 
 export const ResetPasswordPage = () => {
     const [password, setPassword] = useState('');
     const [token, setToken] = useState('');
     const authorized = useAppSelector(store=>store.auth.authorized);
 
-    const onSubmit = (e:SyntheticEvent) => {
+    const onSubmit = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        fetch('https://norma.nomoreparties.space/api/password-reset/reset',{
+        fetch(resetUrl,{
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8'
             },
             body: JSON.stringify({'password': password, 'token':token})
         })
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    return Promise.reject(response.status);
-                }
-            })
-            .then(result => {
-                console.log(result)
-            })
-            .catch(error => {
-                console.log(error);
-                alert('Error ' + error + ' while connecting to Api');
-            });
+        .then(res => checkResponse(res));
     }
 
     return authorized ? <Navigate to='/' replace /> : (
