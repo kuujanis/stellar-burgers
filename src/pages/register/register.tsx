@@ -1,21 +1,21 @@
 import { Input, Button, PasswordInput } from "@ya.praktikum/react-developer-burger-ui-components"
 import { Link, Navigate } from "react-router-dom"
-import { useState } from "react"
-import { useDispatch, useSelector } from "react-redux"
+import { ChangeEvent, FormEvent, useState } from "react"
 import { registerAction } from "../../services/actions/authorizationData"
 import styles from './register.module.css'
+import { useAppDispatch, useAppSelector } from "../../services/store"
 
 export const RegisterPage = () => {
-    const dispatch = useDispatch();
-    const authorized = useSelector(store => store.auth.authorized);
+    const dispatch = useAppDispatch();
+    const authorized = useAppSelector(store => store.auth.authorized);
     const [formData, setFormData] = useState({email:'',password:'', name:''});
-    const onInputChange = e => {
+    const onInputChange = (e:ChangeEvent<HTMLInputElement>) => {
         setFormData({
             ...formData,
             [e.target.name] : e.target.value
         })
     };
-    const onSubmit = e => {
+    const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         dispatch(registerAction({email: formData.email, password: formData.password, name: formData.name}))
         console.log(formData);

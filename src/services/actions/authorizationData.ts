@@ -1,7 +1,7 @@
 import { LOGIN, LOGOUT, REGISTER_SUCCESS, REGISTER_FAILED, 
     REFRESH_TOKEN_REQUEST, REFRESH_TOKEN_SUCCESS, REFRESH_TOKEN_FAILED,
     GET_USER_REQUEST, GET_USER_SUCCESS, GET_USER_FAILED
-} from "../actions/index";
+} from "./index";
 import {
     registerRequest,
     loginRequest,
@@ -9,10 +9,25 @@ import {
     logoutRequest,
     getUserRequest,
     updateUserRequest} from '../../utils/api';
-import {setCookie, delCookie, getCookie} from "../../utils/cookies";
+import { setCookie, delCookie } from "../../utils/cookies";
+import { AppDispatch } from "../store";
 
-export const registerAction = ({email, password, name}) => {
-    return function (dispatch) {
+type TRegister = {
+    email: string,
+    password: string,
+    name: string
+}
+type TLogin = {
+    email: string,
+    password: string
+}
+type TUpdate = {
+    email: string,
+    name: string
+}
+
+export const registerAction = ({email, password, name}:TRegister) => {
+    return function (dispatch:AppDispatch) {
         registerRequest({email, password, name})
         .then((res) => {
             if (res && res.success) {
@@ -40,9 +55,9 @@ export const registerAction = ({email, password, name}) => {
     }
 }
 
-export function  loginAction (state) {
-    return function (dispatch) {
-        return loginRequest(state)
+export function loginAction ({email, password}:TLogin) {
+    return function (dispatch:AppDispatch) {
+        return loginRequest({email, password})
             .then((res) => {
                 if (res && res.success) {
                     const authToken = res.accessToken.split('Bearer ')[1];
@@ -66,7 +81,7 @@ export function  loginAction (state) {
 };
 
 export const refreshTokenAction = () => {
-    return function (dispatch) {
+    return function (dispatch:AppDispatch) {
         dispatch({
             type: REFRESH_TOKEN_REQUEST
         });
@@ -91,7 +106,7 @@ export const refreshTokenAction = () => {
 }
 
 export const logoutAction = () => {
-    return function (dispatch) {
+    return function (dispatch:AppDispatch) {
         logoutRequest()
             .then((res) => {
                 if (res && res.success) {
@@ -109,11 +124,11 @@ export const logoutAction = () => {
 };
 
 export const getUserAction = () => {
-    return function (dispatch) {
+    return function (dispatch:AppDispatch) {
         dispatch({
             type: GET_USER_REQUEST
         });
-        return getUserRequest(getCookie('token'))
+        return getUserRequest()
             .then((res) => {
                 if (res && res.success) {
                     dispatch({
@@ -133,12 +148,12 @@ export const getUserAction = () => {
             });
     };
 };
-export const updateUserAction = (state) => {
-    return function (dispatch) {
+export const updateUserAction = ({email, name}: TUpdate) => {
+    return function (dispatch:AppDispatch) {
         dispatch({
             type: GET_USER_REQUEST
         });
-        updateUserRequest(state.email, state.name, getCookie('token'))
+        updateUserRequest({email, name})
             .then((res) => {
                 if (res && res.success) {
                     dispatch({

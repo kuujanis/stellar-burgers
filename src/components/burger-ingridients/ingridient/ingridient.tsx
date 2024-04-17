@@ -1,26 +1,23 @@
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './ingridient.module.css';
 
-import { useSelector, useDispatch} from 'react-redux'
 import { useDrag } from "react-dnd";
 
-import PropTypes from "prop-types";
-
-import Modal from "../../modal/modal";
-import IngredientDetails from "../../ingredient-details/ingredient-details";
 import { OPEN_INGRD_MODAL, SELECT_INGREDIENT } from "../../../services/actions";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import ingredientPropType from "../../../utils/type";
+import { Link, useLocation } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../../services/store";
+import { FC } from "react";
+import { TIngrd } from "../../../utils/type";
 
-function Ingridient({ingredient}) {
-    const dispatch = useDispatch();
+type TIngredient = {ingredient: TIngrd}
+
+const Ingridient: FC<TIngredient> = ({ingredient}) => {
+    const dispatch = useAppDispatch();
     const location = useLocation();
-    const navigate = useNavigate()
-    const modalIsActive = useSelector((state) => state.modal.ingrdModalActive)
     
-    const  ingredientsCount  = useSelector(state => state.ingrd.ingredientsCount);
-    const  constructorIngredients  = useSelector(state => state.ingrd.constructorIngredients);
-    const  currentIngredient = useSelector(state => state.ingrd.currentIngredient)
+    const  ingredientsCount:{ [id: string]: number }  = useAppSelector(state => state.ingrd.ingredientsCount);
+    const  constructorIngredients  = useAppSelector(state => state.ingrd.constructorIngredients);
+    const  currentIngredient = useAppSelector(state => state.ingrd.currentIngredient)
   
     const onIngredientClick = () => {
         dispatch({type: OPEN_INGRD_MODAL})
@@ -63,18 +60,9 @@ function Ingridient({ingredient}) {
                 ) : (<></>)
             }
             </div>
-            
-            {/* {modalIsActive && 
-                <Modal header="Детали ингредиента">
-                    <IngredientDetails/>
-                </Modal>
-            } */}
+
         </Link>
     )
 }
-
-Ingridient.propTypes = {
-	ingredient: ingredientPropType
-};
 
 export default Ingridient

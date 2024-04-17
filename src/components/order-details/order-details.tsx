@@ -1,10 +1,10 @@
 import styles from './order-details.module.css';
 import okPic from '../../images/icon-accepted.svg';
-import { useSelector } from 'react-redux'
+import { useAppSelector } from '../../services/store';
 
 function OrderDetails() {
 
-  const orderNumber = useSelector((state) => state.ingrd.orderNumber);
+  const orderNumber = useAppSelector((state) => state.ingrd.orderNumber);
 
   return (
     <div className={styles.root}>

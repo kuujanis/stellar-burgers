@@ -1,6 +1,3 @@
-export const normaUrl = 'https://norma.nomoreparties.space/api/ingredients '
-export const postURL = 'https://norma.nomoreparties.space/api/orders'
-
 export const generateID = function() {
   let length = 24,
       charset = "abcdefghijklmnopqrstuvwxyz0123456789",
@@ -11,3 +8,4 @@ export const generateID = function() {
   }
   return retVal;
 }
+

@@ -1,11 +1,17 @@
+import { UnknownAction } from 'redux'
 import { OPEN_INGRD_MODAL, OPEN_CONSTRUCT_MODAL, CLOSE_MODAL } from '../actions'
+
+type TModalStore = {
+  ingrdModalActive: boolean,
+  constructModalActive: boolean
+}
 
 const initialState = {
     ingrdModalActive: false,
     constructModalActive: false
 }
 
-export const modalReducer = (state = initialState, action) => {
+export const modalReducer = (state:TModalStore = initialState, action: UnknownAction) => {
   switch(action.type) {
     case OPEN_INGRD_MODAL:
       return {

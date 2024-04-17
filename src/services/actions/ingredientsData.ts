@@ -1,23 +1,22 @@
-import { FETCH_INGREDIENTS_ERROR, FETCH_INGREDIENTS_REQUEST, FETCH_INGREDIENTS_SUCCESS } from ".";
-import {normaUrl} from '../../utils'
+import {checkResponse, normaUrl} from '../../utils/api'
+import { 
+    FETCH_INGREDIENTS_REQUEST,
+    FETCH_INGREDIENTS_SUCCESS,
+    FETCH_INGREDIENTS_ERROR,
+  } from "../actions";
+import { AppDispatch } from "../store";
 
 export const fetchIngredients = () => {
-    return function(dispatch) {
+    return function(dispatch:AppDispatch) {
         dispatch({
             type: FETCH_INGREDIENTS_REQUEST,
         })
         fetch(normaUrl)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw new Error("Can't fetch data");
-                }
-            })
-            .then(res => {
+            .then(res => checkResponse(res))
+            .then(result => {
                 dispatch({
                     type: FETCH_INGREDIENTS_SUCCESS,
-                    ingredients: res.data
+                    ingredients: result.data
                 })
             })
             .catch(err => {

@@ -1,25 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch} from 'react-redux'
 import { useInView } from "react-intersection-observer";
-import { Link, useLocation } from "react-router-dom";
-
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './burger-ingridients.module.css'
-
 import Ingridient from "./ingridient/ingridient";
 
-import {fetchIngredients} from '../../services/actions/ingredientsData'
+import { TIngrd } from "../../utils/type";
+import { useAppSelector } from "../../services/store";
 
 
 
-function BurgerIngridients() {
+const BurgerIngridients = () => {
 
     const [current,setCurrent] = useState('bun');
 
-    const showTab = (tab) => {
+    const showTab = (tab:string) => {
         setCurrent(tab);
-		const element = document.getElementById(tab);
-		if (element) element.scrollIntoView({ behavior: "smooth" });
+		const el = document.getElementById(tab);
+		el?.scrollIntoView({ behavior: "smooth" });
     }
 
     //tab change on scroll
@@ -41,16 +38,16 @@ function BurgerIngridients() {
 
     //data
 
-    const ingredients = useSelector(state => state.ingrd.ingredients);
+    const ingredients = useAppSelector(state => state.ingrd.ingredients);
 
-    const renderIngridient = (ingredient) => {
+    const renderIngridient = (ingredient:TIngrd) => {
         return (
             <Ingridient ingredient={ingredient} key={ingredient._id}/>
         )};
 
-    const ingredientsBun = ingredients.filter((itm)=>itm.type==='bun' && itm);
-	const ingredientsSlop = ingredients.filter((itm)=>itm.type==='main'&& itm);
-	const ingredientsSauce=ingredients.filter((itm)=>itm.type==='sauce' && itm);
+    const ingredientsBun = ingredients.filter((itm:TIngrd)=>itm.type==='bun' && itm);
+	const ingredientsSlop = ingredients.filter((itm:TIngrd)=>itm.type==='main'&& itm);
+	const ingredientsSauce=ingredients.filter((itm:TIngrd)=>itm.type==='sauce' && itm);
     
 
     return(

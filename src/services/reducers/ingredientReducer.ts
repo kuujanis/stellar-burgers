@@ -1,20 +1,37 @@
+import { TIngrd, TConstructorIngredients, TIngredientActions } from "../../utils/type";
 import { 
-    FETCH_INGREDIENTS_REQUEST,
-    FETCH_INGREDIENTS_SUCCESS,
-    FETCH_INGREDIENTS_ERROR,
-    POST_ORDER_REQUEST, 
-    POST_ORDER_SUCCESS,
-    POST_ORDER_ERROR,
-    SELECT_INGREDIENT, 
-    GET_CONSTRUCTOR_INGREDIENTS, 
-    PUSH_CONSTRUCTOR_INGREDIENT,
-    DELETE_CONSTRUCTOR_INGREDIENT,
-    REFRESH_CONSTRUCTOR,
-    SET_DEFAULT_CONSTRUCTOR,
-    COUNT_ORDER_SUM
-   } from "../actions";
+  FETCH_INGREDIENTS_REQUEST,
+  FETCH_INGREDIENTS_SUCCESS,
+  FETCH_INGREDIENTS_ERROR,
+  POST_ORDER_REQUEST, 
+  POST_ORDER_SUCCESS,
+  POST_ORDER_ERROR,
+  SELECT_INGREDIENT, 
+  GET_CONSTRUCTOR_INGREDIENTS, 
+  PUSH_CONSTRUCTOR_INGREDIENT,
+  DELETE_CONSTRUCTOR_INGREDIENT,
+  REFRESH_CONSTRUCTOR,
+  SET_DEFAULT_CONSTRUCTOR,
+  COUNT_ORDER_SUM
+} from "../actions";
 
-const initialState = {
+
+
+export type TIngredientsState = {
+  ingredients: TIngrd[];
+  fetchRequest: boolean,
+  fetchFailed: boolean,
+  constructorIngredients: TConstructorIngredients,
+  ingredientsCount: { [id: string]: number },
+  currentIngredient: TIngrd | null,
+
+  orderNumber: number,
+  totalPrice: number,
+  orderRequest: boolean,
+  orderFailed: boolean
+}
+
+const initialState:TIngredientsState = {
     ingredients: [],
     fetchRequest: false,
     fetchFailed: false,
@@ -22,15 +39,15 @@ const initialState = {
       bun: null,
       slop: []
     },
-    orderRequest: false,
-    orderFailed: false,
-    currentIngredient: {},
+    currentIngredient: null,
     ingredientsCount: {},
     orderNumber: 0,
     totalPrice: 0,
+    orderRequest: false,
+    orderFailed: false
 }
 
-export const ingredientReducer = (state = initialState, action) => {
+export const ingredientReducer = (state:TIngredientsState = initialState, action:TIngredientActions):TIngredientsState => {
     switch(action.type) {
         case FETCH_INGREDIENTS_SUCCESS:
             return {
@@ -81,12 +98,7 @@ export const ingredientReducer = (state = initialState, action) => {
             case GET_CONSTRUCTOR_INGREDIENTS: {
               return {
                 ...state,
-                constructorIngredients: {
-                  bun: action.ingredients.bun,
-                  slop: action.ingredients.slop.filter(
-                    (item) => item.type !== "bun"
-                  ),
-                },
+                constructorIngredients: action.ingredients
               };
             }
             case PUSH_CONSTRUCTOR_INGREDIENT: {
@@ -145,14 +157,9 @@ export const ingredientReducer = (state = initialState, action) => {
 
             case SET_DEFAULT_CONSTRUCTOR: {
                 return{
-                    ...state,
-                    constructorIngredients: {
-                        bun: null,
-                        slop: []
-                    },
-                      currentIngredient: {},
-                      ingredientsCount: 0,
-                      totalPrice: 0,
+                  ...state,
+                  constructorIngredients: initialState.constructorIngredients,
+                  ingredientsCount: initialState.ingredientsCount,
                 }
             }
 
@@ -160,10 +167,10 @@ export const ingredientReducer = (state = initialState, action) => {
               return {
                 ...state,
                 totalPrice:
-                  action.slop && action.bun &&
-                  action?.slop?.reduce((acc, {price}) => acc + price, action.bun.price * 2) || 0
+                  action.slop && action.bun ?
+                  action?.slop?.reduce((acc:number, item) => acc + item.price, 0) + action.bun.price * 2 : 0
               };
             }
-        default: return state
+        default: {return state}
     }
 }

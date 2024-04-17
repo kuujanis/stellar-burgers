@@ -2,7 +2,6 @@ import { Button, ConstructorElement, CurrencyIcon} from "@ya.praktikum/react-dev
 import styles from './burger-constructor.module.css'
 
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from "react-dnd";
 
 import Modal from "../modal/modal";
@@ -10,16 +9,17 @@ import OrderDetails from "../order-details/order-details";
 import { generateID } from "../../utils";
 import { formOrder } from "../../services/actions/orderData";
 import { GET_CONSTRUCTOR_INGREDIENTS, COUNT_ORDER_SUM, PUSH_CONSTRUCTOR_INGREDIENT, OPEN_CONSTRUCT_MODAL, SET_DEFAULT_CONSTRUCTOR, CLOSE_MODAL } from '../../services/actions'
-import ConstructorCard from "./constructor-card/constructor-card";
+import {ConstructorItem} from "./constructor-item/constructor-item";
 import { useNavigate} from "react-router-dom";
-
+import { useAppDispatch, useAppSelector } from "../../services/store";
+import { TIngrd, TDragable } from "../../utils/type";
 
 function BurgerConstructor() {   
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const authorized = useSelector(store=>store.auth.authorized);
-    const modalIsActive = useSelector((state) => state.modal.constructModalActive)
+    const authorized = useAppSelector(store=>store.auth.authorized);
+    const modalIsActive = useAppSelector((state) => state.modal.constructModalActive)
 
     const openModal = () => {
       dispatch({type: OPEN_CONSTRUCT_MODAL})
@@ -29,10 +29,10 @@ function BurgerConstructor() {
       dispatch({type: CLOSE_MODAL}, [dispatch])
     }
 
-    const {bun, slop} = useSelector(state => state.ingrd.constructorIngredients)
-    const constructorIngredients = useSelector(state => state.ingrd.constructorIngredients)
-    const ingredients = useSelector((state) => state.ingrd.ingredients);
-    const totalPrice = useSelector((state) => state.ingrd.totalPrice);
+    const {bun, slop} = useAppSelector(state => state.ingrd.constructorIngredients)
+    const constructorIngredients = useAppSelector(state => state.ingrd.constructorIngredients)
+    const ingredients = useAppSelector((state) => state.ingrd.ingredients);
+    const totalPrice = useAppSelector((state) => state.ingrd.totalPrice);
 
   
     useEffect(() => {
@@ -52,9 +52,8 @@ function BurgerConstructor() {
   
     const onOrderSubmit = () => {
         if (authorized) {
-        const orderArr = [bun._id, ...slop.map((item) => item._id)]
         dispatch(
-            formOrder(orderArr)
+            formOrder([bun?._id, ...slop.map((item) => item._id)])
         );
         dispatch({
           type: SET_DEFAULT_CONSTRUCTOR
@@ -64,7 +63,7 @@ function BurgerConstructor() {
   
     const [, ingridientsTarget] = useDrop({
       accept: "ingredients",
-      drop(ingredient) {
+      drop(ingredient:{id:string}) {
         dispatch({
           type: PUSH_CONSTRUCTOR_INGREDIENT,
           draggedIngridient: ingredients.find(
@@ -88,8 +87,8 @@ function BurgerConstructor() {
             </div>}
             
                 <ul className={styles.scrolldiv + ' ' + styles.orderlist}>
-                    {slop.map((item, i) => (
-                        <ConstructorCard item={item} key={item.dragId} index={i} />
+                    {slop.map((item, i:number) => (
+                        <ConstructorItem item={item} key={item.dragId} index={i} />
                     ))}
                 </ul>
             

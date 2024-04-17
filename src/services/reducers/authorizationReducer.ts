@@ -9,25 +9,32 @@ import {
     GET_USER_FAILED, REFRESH_TOKEN_FAILED, REFRESH_TOKEN_SUCCESS
 } from '../actions/index';
 import {getCookie} from "../../utils/cookies";
+import { TAuthActions, TUser } from '../../utils/type';
+
+
+type TAuthStore = {
+    login: Boolean,
+    authorized: Boolean,
+    user: TUser
+}
 
 const initialState =
     {
-        login: false, // ???
+        login: false,
         authorized : !!getCookie('token'),
-        //authorized:false,
         user: {
-            name:'',
             email:'',
-            password:''
+            password:'',
+            name:''
         }
 };
 
-export const authorizationReducer = (state = initialState, action) => {
+export const authorizationReducer = (state:TAuthStore = initialState, action: TAuthActions) => {
     switch (action.type) {
 
         case REGISTER_SUCCESS: {
-            const userObj = action.user;
-            console.log(userObj)
+            // const userObj = action.user;
+            // console.log(userObj)
             return {
                 ...state
             };
@@ -44,10 +51,7 @@ export const authorizationReducer = (state = initialState, action) => {
                 ...state,
                 login: true,
                 authorized : true,
-                user: {
-                    name : action?.user?.name,
-                    email: action?.user?.email
-                }
+                user: action.user
             };
         }
         case LOGOUT: {
@@ -57,7 +61,8 @@ export const authorizationReducer = (state = initialState, action) => {
                 authorized : false,
                 user: {
                     name : '',
-                    email: ''
+                    email: '',
+                    password: ''
                 }
             };
         }
@@ -68,7 +73,8 @@ export const authorizationReducer = (state = initialState, action) => {
                 getUserRequest : true,
                 user: {
                     name : '',
-                    email: ''
+                    email: '',
+                    password: ''
                 }
             }
         }
@@ -77,10 +83,7 @@ export const authorizationReducer = (state = initialState, action) => {
                 ...state,
                 getUserRequest : false,
                 authorized : true,
-                user: {
-                    name : action?.user?.name,
-                    email: action?.user?.email
-                }
+                user: action.user
             }
         }
         case GET_USER_FAILED: {
@@ -90,7 +93,8 @@ export const authorizationReducer = (state = initialState, action) => {
                 authorized: false,
                 user: {
                     name : '',
-                    email: ''
+                    email: '',
+                    password: ''
                 }
             }
         }
