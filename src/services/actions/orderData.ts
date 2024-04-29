@@ -1,9 +1,9 @@
-import { Dispatch } from "redux";
-import { POST_ORDER_ERROR, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from ".";
-import {checkResponse, postURL} from '../../utils/api'
+import { ORDER_CLEAR, ORDER_GET_FAILED, ORDER_GET_REQUEST, ORDER_GET_SUCCESS, POST_ORDER_ERROR, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from ".";
+import {checkResponse, orderUrl, postURL} from '../../utils/api'
+import { AppDispatch } from "../store";
 
 export const formOrder = (orderList: Array<string|undefined>) => {
-    return function (dispatch: Dispatch) {
+    return function (dispatch: AppDispatch) {
         dispatch({
             type: POST_ORDER_REQUEST,
         })
@@ -30,5 +30,37 @@ export const formOrder = (orderList: Array<string|undefined>) => {
             })
         })
     }
-    
+}
+
+export const getOrder = (id: string) => {
+	return function(dispatch: AppDispatch) {
+		dispatch({type: ORDER_GET_REQUEST});
+		fetch(orderUrl + `/${id}`, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json;charset=utf-8'
+				}
+			}
+		)
+		.then(checkResponse)
+		.then((response:any) => {
+			console.log(response);
+			dispatch({
+				type: ORDER_GET_SUCCESS,
+				order: response.orders[0]
+			});
+			return response.data;
+		})
+		.catch(() => {
+			console.log('errr');
+			dispatch({
+				type: ORDER_GET_FAILED
+			})
+		})
+	}
+}
+export const clearOrder = () => {
+	return function (dispatch: AppDispatch) {
+		dispatch({type: ORDER_CLEAR});
+	}
 }

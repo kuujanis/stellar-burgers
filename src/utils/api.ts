@@ -10,6 +10,7 @@ const loginUrl = authUrl+'/login'
 const tokenUrl = authUrl+'/token'
 const logoutUrl = authUrl+'/logout'
 const userUrl = authUrl+'/user'
+export const orderUrl = BASE_URL+'/orders'
 
 export const forgotUrl = BASE_URL+'/password-reset'
 export const resetUrl = forgotUrl+'/reset'

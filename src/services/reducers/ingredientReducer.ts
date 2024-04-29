@@ -1,4 +1,4 @@
-import { TIngrd, TConstructorIngredients, TIngredientActions } from "../../utils/type";
+import { TIngrd, TConstructorIngredients } from "../../utils/type";
 import { 
   FETCH_INGREDIENTS_REQUEST,
   FETCH_INGREDIENTS_SUCCESS,
@@ -14,6 +14,7 @@ import {
   SET_DEFAULT_CONSTRUCTOR,
   COUNT_ORDER_SUM
 } from "../actions";
+import { TIngredientActions } from "./ingrd.types";
 
 
 
