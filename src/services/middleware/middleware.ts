@@ -31,7 +31,7 @@ export type TWSStoreActions = {
   
       if (socket) {
         socket.onopen = (e) => {
-          dispatch({ type: wsActions.wsInit, payload: e })
+          dispatch({ type: wsActions.onOpen })
         };
   
         socket.onerror = (e) => {
@@ -48,7 +48,7 @@ export type TWSStoreActions = {
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
   
-          dispatch({ type: wsActions.onMessage, payload: event })
+          dispatch({ type: wsActions.onMessage, payload: parsedData })
         };
   
         socket.onclose = (e) => {
