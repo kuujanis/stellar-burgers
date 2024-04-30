@@ -34,7 +34,6 @@ export const authorizationReducer = (state:TAuthStore = initialState, action: TA
     switch (action.type) {
 
         case REGISTER_SUCCESS: {
-            // const userObj = action.user;
             return {
                 ...state
             };

@@ -21,6 +21,7 @@ import { IngredientDetailsPage } from '../../pages/details-page/ingredient-detai
 import { fetchIngredients } from '../../services/actions/ingredientsData';
 import {TIngrd} from '../../utils/type'
 import { useAppDispatch } from '../../services/store';
+import { FeedPage } from '../../pages/feed/feed-page';
 
 const App: FC = () => {
   const navigate = useNavigate();
@@ -56,6 +57,7 @@ const App: FC = () => {
         <Route path='/reset-password' element={<ResetPasswordPage/>} />
         <Route path='/ingredients/:id' element={<IngredientDetailsPage/>} />
         <Route path='/profile' element={<ProtectedRoute element={<ProfilePage />}/>}/>
+        <Route path='/feed' element={<FeedPage/>}/>
         <Route path='*' element={<NotFoundPage/>} />
 
       </Routes>

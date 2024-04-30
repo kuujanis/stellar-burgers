@@ -17,7 +17,7 @@ export type TWSStoreActions = {
    {return ((
     store: MiddlewareAPI<AppDispatch, RootState>
   ) => {
-    let socket: WebSocket | null = null;
+    let socket:  WebSocket | null = null;
   
     return (next) => (action: AnyAction) => {
       const { dispatch } = store;
@@ -31,12 +31,11 @@ export type TWSStoreActions = {
   
       if (socket) {
         socket.onopen = (e) => {
-          console.log(e);
-          dispatch({ type: wsActions.wsInit, payload: e })
+          dispatch({ type: WS_CONNECTION_START, payload: e })
         };
   
         socket.onerror = (e) => {
-            dispatch({ type: wsActions.onError, payload: e })
+            dispatch({ type: WS_CONNECTION_FAILED, payload: e })
         };
   
         socket.onmessage = (event) => {
@@ -49,12 +48,11 @@ export type TWSStoreActions = {
               new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
           );
   
-          dispatch({ type: wsActions.onMessage, payload: event })
+          dispatch({ type: WS_GET_DATA, payload: event })
         };
   
         socket.onclose = (e) => {
-          console.log(e);
-          dispatch({ type: wsActions.onClose, payload: e })
+          dispatch({ type: WS_CONNECTION_END, payload: e })
         };
       }
       next(action);
