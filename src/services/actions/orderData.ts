@@ -19,7 +19,7 @@ export const formOrder = (orderList: Array<string|undefined>) => {
                     type: POST_ORDER_SUCCESS,
                     orderNumber: result.order.number
                 })
-                console.log('success')
+                console.log('ORDER_CREATED')
             }
         })
         .catch(err => {
@@ -32,7 +32,7 @@ export const formOrder = (orderList: Array<string|undefined>) => {
     }
 }
 
-export const getOrder = (id: string) => {
+export const getOrder = (id: string | undefined) => {
 	return function(dispatch: AppDispatch) {
 		dispatch({type: ORDER_GET_REQUEST});
 		fetch(orderUrl + `/${id}`, {
@@ -52,7 +52,7 @@ export const getOrder = (id: string) => {
 			return response.data;
 		})
 		.catch(() => {
-			console.log('errr');
+			console.log('ORDER_API_ERROR');
 			dispatch({
 				type: ORDER_GET_FAILED
 			})

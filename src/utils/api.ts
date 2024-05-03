@@ -14,6 +14,7 @@ export const orderUrl = BASE_URL+'/orders'
 
 export const forgotUrl = BASE_URL+'/password-reset'
 export const resetUrl = forgotUrl+'/reset'
+export const feedUrl = 'wss://norma.nomoreparties.space/orders'
 
 type TLogin = {
   email: string,

@@ -22,6 +22,10 @@ import { fetchIngredients } from '../../services/actions/ingredientsData';
 import {TIngrd} from '../../utils/type'
 import { useAppDispatch } from '../../services/store';
 import { FeedPage } from '../../pages/feed/feed-page';
+import { OrderInfo } from '../order-info/order-info';
+import { Profile } from '../profile/profile';
+import { OrderPage } from '../../pages/order/order-page';
+import { OrderFeed } from '../order-feed/order-feed';
 
 const App: FC = () => {
   const navigate = useNavigate();
@@ -51,13 +55,16 @@ const App: FC = () => {
             </DndProvider>
           </main>
         } />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/forgot-password' element={<ForgotPasswordPage />} />
-        <Route path='/reset-password' element={<ResetPasswordPage/>} />
-        <Route path='/ingredients/:id' element={<IngredientDetailsPage/>} />
-        <Route path='/profile' element={<ProtectedRoute element={<ProfilePage />}/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/register' element={<RegisterPage/>}/>
+        <Route path='/forgot-password' element={<ForgotPasswordPage/>}/>
+        <Route path='/reset-password' element={<ResetPasswordPage/>}/>
+        <Route path='/ingredients/:id' element={<IngredientDetailsPage/>}/>
+        <Route path='/profile' element={<ProtectedRoute element={<ProfilePage><Profile/></ProfilePage>}/>}/>
         <Route path='/feed' element={<FeedPage/>}/>
+        <Route path='/feed/:id'  element={<OrderPage/>}/>
+        <Route path='/profile/orders' element={<ProtectedRoute element={<ProfilePage><OrderFeed/></ProfilePage>}/>}/>
+        <Route path='/profile/orders/:id' element={<ProtectedRoute element={<OrderPage/>}/>}/>
         <Route path='*' element={<NotFoundPage/>} />
 
       </Routes>
@@ -67,6 +74,26 @@ const App: FC = () => {
           <Route path='/ingredients/:id' element={
             <Modal closeModal={handleModalClose} header={'Детали ингредиента'}>
               <IngredientDetails ingredient={selectedIngredient} />
+            </Modal>
+          }/>
+        </Routes>
+      }
+
+      {background &&
+        <Routes location={location}>
+          <Route path='/feed/:id' element={
+            <Modal closeModal={handleModalClose} header={'Детали заказа'}>
+              <OrderInfo/>
+            </Modal>
+          }/>
+        </Routes>
+      }
+
+      {background &&
+        <Routes location={location}>
+          <Route path='/profile/orders/:id' element={
+            <Modal closeModal={handleModalClose} header={'Детали заказа'}>
+              <OrderInfo/>
             </Modal>
           }/>
         </Routes>

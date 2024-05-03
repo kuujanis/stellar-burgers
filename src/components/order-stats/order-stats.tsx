@@ -9,7 +9,7 @@ const OrdersStats = () => {
   
     return (
       <section className="ml-15">
-        <div className={`${styles.statuses} mb-15`}>
+        <div className={`${styles.statuses} mb-10`}>
           <div className={`${styles.statusesGroup} mr-9`}>
             <h3 className="text text_type_main-medium mb-6">Готовы:</h3>
             <div className={styles.numbers}>
@@ -47,7 +47,7 @@ const OrdersStats = () => {
         <p className={`${styles.number} text text_type_digits-large`}>
           {messages?.total}
         </p>
-        <h3 className="text text_type_main-medium mt-15">
+        <h3 className="text text_type_main-medium mt-10">
           Выполнено за сегодня:
         </h3>
         <p className={`${styles.number} text text_type_digits-large`}>
