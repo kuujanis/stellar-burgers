@@ -12,7 +12,7 @@ import { GET_CONSTRUCTOR_INGREDIENTS, COUNT_ORDER_SUM, PUSH_CONSTRUCTOR_INGREDIE
 import {ConstructorItem} from "./constructor-item/constructor-item";
 import { useNavigate} from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../services/store";
-import { TIngrd, TDragable } from "../../utils/type";
+import { getCookie } from "../../utils/cookies";
 
 function BurgerConstructor() {   
 
@@ -51,7 +51,7 @@ function BurgerConstructor() {
     }, [dispatch, slop, bun]);
   
     const onOrderSubmit = () => {
-        if (authorized) {
+        if (getCookie('token')) {
         dispatch(
             formOrder([bun?._id, ...slop.map((item) => item._id)])
         );
@@ -109,7 +109,8 @@ function BurgerConstructor() {
                 </p>
                     <CurrencyIcon type="primary"/>
                     <Button type="primary" disabled={!bun} htmlType='submit' size="large" onClick={onOrderSubmit}>Оформить заказ</Button>
-                    {modalIsActive && <Modal closeModal={closeModal}>
+                {modalIsActive && 
+                <Modal closeModal={closeModal}>
 	                <OrderDetails/>
                 </Modal>}
             </div>
