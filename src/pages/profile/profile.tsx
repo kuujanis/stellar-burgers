@@ -16,15 +16,6 @@ export const ProfilePage:FC<TProfile> = ({children}) => {
 
     const dispatch = useAppDispatch();
 
-    useEffect(() => {
-        console.log(getCookie('token'))
-        dispatch({type: WS_CONNECTION_START, payload: `wss://norma.nomoreparties.space/orders?token=${getCookie('token')}`});
-        // feedUrl+`?token=${accessToken}`
-        return () => {
-          dispatch({type: WS_CONNECTION_END});
-        };
-    }, [dispatch]);
-
     useEffect(()=>{
         dispatch(getUserAction())
     },[]);

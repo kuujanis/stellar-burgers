@@ -1,5 +1,6 @@
 import { ORDER_CLEAR, ORDER_GET_FAILED, ORDER_GET_REQUEST, ORDER_GET_SUCCESS, POST_ORDER_ERROR, POST_ORDER_REQUEST, POST_ORDER_SUCCESS } from ".";
 import {checkResponse, orderUrl, postURL} from '../../utils/api'
+import { getCookie } from "../../utils/cookies";
 import { AppDispatch } from "../store";
 
 export const formOrder = (orderList: Array<string|undefined>) => {
@@ -9,7 +10,10 @@ export const formOrder = (orderList: Array<string|undefined>) => {
         })
         fetch(postURL, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {
+				'Content-Type': 'application/json',
+				'Authorization': 'Bearer '+getCookie('token')
+			},
             body: JSON.stringify({"ingredients": orderList})
         })
         .then(res => checkResponse(res))
@@ -24,7 +28,7 @@ export const formOrder = (orderList: Array<string|undefined>) => {
         })
         .catch(err => {
             console.log(err.message)
-            alert('API CONNECTION ERROR')
+            console.log('API CONNECTION ERROR')
             dispatch({
                 type: POST_ORDER_ERROR,
             })
