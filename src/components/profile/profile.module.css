@@ -1,0 +1,10 @@
+.profile_form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.profile_col {
+    display: flex;
+    justify-content: space-between;
+    gap: 24px;
+}

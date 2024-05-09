@@ -123,6 +123,8 @@ export const logoutAction = () => {
     };
 };
 
+//user
+
 export const getUserAction = () => {
     return function (dispatch:AppDispatch) {
         dispatch({
@@ -138,13 +140,14 @@ export const getUserAction = () => {
                 }
             })
             .catch((err) => {
-                console.error('Error: ', err);
-                dispatch({
-                    type: GET_USER_FAILED
-                });
-                dispatch({
+                console.log('Error '+err);
+                if (err.message === 'invalid token' || err.message === 'jwt expired')
+                {dispatch({
                     type: REFRESH_TOKEN_REQUEST,
-                });
+                })} else {
+                dispatch({
+                    type: GET_USER_FAILED,
+                })}
             });
     };
 };
@@ -167,9 +170,14 @@ export const updateUserAction = ({email, name}: TUpdate) => {
                 }
             })
             .catch((err) => {
+                console.log('Error '+err);
+                if (err.message === 'invalid token' || err.message === 'jwt expired')
+                {dispatch({
+                    type: REFRESH_TOKEN_REQUEST,
+                })} else {
                 dispatch({
                     type: GET_USER_FAILED,
-                });
+                })}
             });
     }
 }

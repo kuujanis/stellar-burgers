@@ -9,7 +9,8 @@ import {
     GET_USER_FAILED, REFRESH_TOKEN_FAILED, REFRESH_TOKEN_SUCCESS
 } from '../actions/index';
 import {getCookie} from "../../utils/cookies";
-import { TAuthActions, TUser } from '../../utils/type';
+import { TUser } from '../../utils/type';
+import { TAuthActions } from './auth.types';
 
 
 type TAuthStore = {
@@ -33,8 +34,6 @@ export const authorizationReducer = (state:TAuthStore = initialState, action: TA
     switch (action.type) {
 
         case REGISTER_SUCCESS: {
-            // const userObj = action.user;
-            // console.log(userObj)
             return {
                 ...state
             };
