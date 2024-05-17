@@ -19,6 +19,7 @@ const OrderCard: FC<TOrderCard> = ({ order }) => {
   let { ingredients: allIngredients } = useAppSelector(
     (state) => state.ingrd
   );
+
   const location = useLocation();
 
   const orderIngredients = useMemo(
@@ -28,6 +29,9 @@ const OrderCard: FC<TOrderCard> = ({ order }) => {
       ),
     [ingredients, allIngredients]
   );
+  
+  console.log(allIngredients)
+  console.log(orderIngredients)
 
   const totalPrice = useMemo(
     () =>
