@@ -29,14 +29,11 @@ const OrderCard: FC<TOrderCard> = ({ order }) => {
       ),
     [ingredients, allIngredients]
   );
-  
-  console.log(allIngredients)
-  console.log(orderIngredients)
 
   const totalPrice = useMemo(
     () =>
       orderIngredients.reduce(
-        (a, b) => a + b.price * (b.type === "bun" ? 2 : 1),
+        (a, b) => a + b?.price * (b?.type === "bun" ? 2 : 1),
         0
       ),
     [orderIngredients]

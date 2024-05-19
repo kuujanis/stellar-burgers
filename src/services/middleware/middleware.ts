@@ -44,12 +44,12 @@ export type TWSStoreActions = {
           const { data } = event;
           const parsedData = JSON.parse(data);
           console.log('message')
-          // const { success, ...restParsedData } = parsedData;
+          const { success, ...restParsedData } = parsedData;
   
-          // restParsedData.orders.sort(
-          //   (a: TOrder, b: TOrder) =>
-          //     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          // );
+          restParsedData?.orders?.sort(
+            (a: TOrder, b: TOrder) =>
+              new Date(b?.createdAt)?.getTime() - new Date(a?.createdAt)?.getTime()
+          );
   
           dispatch({ type: wsActions.onMessage, payload: parsedData })
         };
