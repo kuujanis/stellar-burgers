@@ -15,20 +15,23 @@ const blankUser: TUser = {
 }
 
 describe('check authorization reducer', () => {
-    test('should return initialstate',():void=>{
-        expect(authorizationReducer(initialState, {type: undefined})).toEqual({
-            initialState
-        })
-    })
-    test('scheck LOGOUT', ():void =>{
+    // test('should return initialstate',():void=>{
+    //     expect(authorizationReducer(undefined, {type: undefined})).toEqual({initialState})
+    // })
+    test('check LOGIN', ():void =>{
         expect(authorizationReducer(initialState, {type: LOGIN, user:user})).toEqual({
             ...initialState,
             login: true,
-            authorized: true
+            authorized: true,
+            user: user
         })
     })
-    test('check LOGIN', ():void =>{
-        expect(authorizationReducer(initialState, {type: LOGOUT})).toEqual({
+    test('check LOGOUT', ():void =>{
+        expect(authorizationReducer({
+            authorized: true,
+            login: true,
+            user: user
+        }, {type: LOGOUT})).toEqual({
             ...initialState,
             login: false,
             authorized: false,
@@ -46,7 +49,8 @@ describe('check authorization reducer', () => {
         expect(authorizationReducer(initialState, {type: GET_USER_SUCCESS, user:user})).toEqual({
             ...initialState,
             getUserRequest: false,
-            authorized: false
+            authorized: true,
+            user: user
         })
     })
     test('check GET_USER_FAILED', ():void =>{

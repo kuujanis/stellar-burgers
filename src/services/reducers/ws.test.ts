@@ -50,7 +50,7 @@ describe('check websocket reducer',()=>{
     test('check WS_GET_DATA', ():void =>{
         expect(wsReducer(initialState, {type: WS_GET_DATA, payload: messages})).toEqual({
             ...initialState,
-            messages: null,
+            messages: messages,
             wsConnected: false
         })
     })

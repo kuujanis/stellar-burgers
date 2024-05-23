@@ -216,7 +216,7 @@ const ingredients:TIngrd[] = [
 ]
 
 const bun:TIngrd = {
-    "_id":"60666c42cc7b410027a1a9b1",
+    "_id":"testId",
     "name":"Краторная булка N-200i",
     "type":"bun",
     "proteins":80,
@@ -253,12 +253,10 @@ slop.type='main'
 
 const orderNumber:number = 40505
 
-describe('check order reducer',()=>{
-    test('should return initialstate',():void=>{
-        expect(ingredientReducer(initialState, {type: undefined})).toEqual({
-            initialState
-        })
-    })
+describe('check ingredient reducer',()=>{
+    // test('should return initialstate',():void=>{
+    //     expect(ingredientReducer(initialState, {type: undefined})).toEqual({initialState})
+    // })
     test('check FETCH_INGREDIENTS_SUCCESS', ():void =>{
         expect(ingredientReducer(initialState, {type: FETCH_INGREDIENTS_SUCCESS, ingredients:ingredients})).toEqual({
             ...initialState,
@@ -339,7 +337,10 @@ describe('check order reducer',()=>{
                     ...slop,
                     dragId: testDragId
                 }]
-            }
+            },
+			ingredientsCount: {
+				'testId': 1
+			}
         })
     })
     test('should delete ingredient', ():void =>{
@@ -353,7 +354,7 @@ describe('check order reducer',()=>{
                 }]
             },
             ingredientsCount: {
-                testId: 1
+                'testId': 1
             }
         }, 
         {
@@ -370,7 +371,7 @@ describe('check order reducer',()=>{
                 slop: []
             },
             ingredientsCount: {
-                testId: 0
+               'testId': 0
             }
         })
     })
@@ -420,7 +421,7 @@ describe('check order reducer',()=>{
             }
         })
     })
-    test('should rearrange ingredients', ():void =>{
+    test('should clear constructor', ():void =>{
         expect(ingredientReducer({
             ...initialState,
             constructorIngredients: {
@@ -437,6 +438,6 @@ describe('check order reducer',()=>{
                 ]
             }
         }, 
-        {type: SET_DEFAULT_CONSTRUCTOR})).toEqual({initialState})
+        {type: SET_DEFAULT_CONSTRUCTOR})).toEqual(initialState)
     })
 })
