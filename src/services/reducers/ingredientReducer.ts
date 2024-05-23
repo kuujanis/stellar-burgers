@@ -32,7 +32,7 @@ export type TIngredientsState = {
   orderFailed: boolean
 }
 
-const initialState:TIngredientsState = {
+export const initialState:TIngredientsState = {
     ingredients: [],
     fetchRequest: false,
     fetchFailed: false,

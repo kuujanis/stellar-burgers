@@ -9,7 +9,7 @@ type TOrderStore = {
     order: TOrder | null
 }
 
-const initialState:TOrderStore = {
+export const initialState:TOrderStore = {
         number: 0,
         order: null,
         orderRequest: false,
