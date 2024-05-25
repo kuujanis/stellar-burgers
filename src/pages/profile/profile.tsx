@@ -7,6 +7,7 @@ import { getUserAction, logoutAction } from '../../services/actions/authorizatio
 import { useAppDispatch, useAppSelector } from '../../services/store';
 import { WS_CONNECTION_END, WS_CONNECTION_START } from '../../services/actions';
 import { getCookie } from '../../utils/cookies';
+import { feedUrl } from '../../utils/api';
 
 type TProfile = {
     children: ReactNode
@@ -24,6 +25,15 @@ export const ProfilePage:FC<TProfile> = ({children}) => {
     const onLogout = () => {
         dispatch(logoutAction())
     }
+
+    useEffect(() => {
+        console.log(getCookie('token'))
+        dispatch({type: WS_CONNECTION_START, payload: feedUrl+`?token=${getCookie('token')}`});
+        // 
+        return () => {
+          dispatch({type: WS_CONNECTION_END});
+        };
+    }, [dispatch]);
 
     return (
         <section className={styles.profile_main + ' pt-20'}>

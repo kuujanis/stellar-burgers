@@ -19,6 +19,7 @@ const OrderCard: FC<TOrderCard> = ({ order }) => {
   let { ingredients: allIngredients } = useAppSelector(
     (state) => state.ingrd
   );
+
   const location = useLocation();
 
   const orderIngredients = useMemo(
@@ -32,7 +33,7 @@ const OrderCard: FC<TOrderCard> = ({ order }) => {
   const totalPrice = useMemo(
     () =>
       orderIngredients.reduce(
-        (a, b) => a + b.price * (b.type === "bun" ? 2 : 1),
+        (a, b) => a + b?.price * (b?.type === "bun" ? 2 : 1),
         0
       ),
     [orderIngredients]

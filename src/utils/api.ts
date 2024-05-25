@@ -3,18 +3,19 @@ import { getCookie } from "./cookies"
 const BASE_URL = 'https://norma.nomoreparties.space/api'
 export const normaUrl = BASE_URL+'/ingredients '
 export const postURL = BASE_URL+'/orders'
-const authUrl = BASE_URL+'/auth'
+export const authUrl = BASE_URL+'/auth'
 
-const registerUrl = authUrl+'/register'
-const loginUrl = authUrl+'/login'
-const tokenUrl = authUrl+'/token'
-const logoutUrl = authUrl+'/logout'
-const userUrl = authUrl+'/user'
+export const registerUrl = authUrl+'/register'
+export const loginUrl = authUrl+'/login'
+export const tokenUrl = authUrl+'/token'
+export const logoutUrl = authUrl+'/logout'
+export const userUrl = authUrl+'/user'
 export const orderUrl = BASE_URL+'/orders'
 
 export const forgotUrl = BASE_URL+'/password-reset'
 export const resetUrl = forgotUrl+'/reset'
 export const feedUrl = 'wss://norma.nomoreparties.space/orders'
+
 
 type TLogin = {
   email: string,

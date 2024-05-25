@@ -4,7 +4,6 @@ import { getUserAction, updateUserAction } from "../../services/actions/authoriz
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import styles from './profile.module.css'
 
-
 export const Profile = () => {
 
     const dispatch = useAppDispatch();
@@ -17,6 +16,7 @@ export const Profile = () => {
     useEffect(()=>{
         dispatch(getUserAction())
     },[]);
+
     
     useEffect(()=>{
         setState(user);

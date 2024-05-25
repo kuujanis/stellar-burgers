@@ -31,28 +31,32 @@ export type TWSStoreActions = {
   
       if (socket) {
         socket.onopen = (e) => {
+          console.log('open')
           dispatch({ type: wsActions.onOpen })
         };
   
-        socket.onerror = (e) => {
-            dispatch({ type: wsActions.onError, payload: e })
+        socket.onerror = (event) => {
+          console.log('err')
+            dispatch({ type: wsActions.onError, payload: event.type })
         };
   
         socket.onmessage = (event) => {
           const { data } = event;
           const parsedData = JSON.parse(data);
+          console.log('message')
           const { success, ...restParsedData } = parsedData;
   
-          restParsedData.orders.sort(
+          restParsedData?.orders?.sort(
             (a: TOrder, b: TOrder) =>
-              new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+              new Date(b?.createdAt)?.getTime() - new Date(a?.createdAt)?.getTime()
           );
   
           dispatch({ type: wsActions.onMessage, payload: parsedData })
         };
   
-        socket.onclose = (e) => {
-          dispatch({ type: wsActions.onClose, payload: e })
+        socket.onclose = (event) => {
+          console.log('close')
+          dispatch({ type: wsActions.onClose, payload: event.type })
         };
       }
       next(action);

@@ -55,8 +55,8 @@ export const getOrder = (id: string | undefined) => {
 			});
 			return response.data;
 		})
-		.catch(() => {
-			console.log('ORDER_API_ERROR');
+		.catch((err) => {
+			console.log(err);
 			dispatch({
 				type: ORDER_GET_FAILED
 			})

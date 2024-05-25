@@ -7,7 +7,7 @@ type TWsStore = {
     messages: TMessage | null
 }
 
-const initialState: TWsStore = {
+export const initialState: TWsStore = {
   wsConnected: false,
   messages: null
 };

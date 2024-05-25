@@ -12,16 +12,16 @@ import {
 import { setCookie, delCookie } from "../../utils/cookies";
 import { AppDispatch } from "../store";
 
-type TRegister = {
+export type TRegister = {
     email: string,
     password: string,
     name: string
 }
-type TLogin = {
+export type TLogin = {
     email: string,
     password: string
 }
-type TUpdate = {
+export type TUpdate = {
     email: string,
     name: string
 }

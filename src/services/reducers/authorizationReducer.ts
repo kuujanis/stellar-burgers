@@ -13,13 +13,13 @@ import { TUser } from '../../utils/type';
 import { TAuthActions } from './auth.types';
 
 
-type TAuthStore = {
+export type TAuthStore = {
     login: Boolean,
     authorized: Boolean,
     user: TUser
 }
 
-const initialState =
+export const initialState =
     {
         login: false,
         authorized : !!getCookie('token'),
